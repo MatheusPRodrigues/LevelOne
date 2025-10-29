@@ -9,17 +9,17 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace LevelOne.Controllers
 {
-    public class ContasController : Controller
+    public class LoginController : Controller
     {
         private readonly ApplicationDbContext context;
 
-        public ContasController(ApplicationDbContext context)
+        public LoginController(ApplicationDbContext context)
         {
             this.context = context;
         }
 
         [HttpGet]
-        public IActionResult Login()
+        public IActionResult Index()
         {
             return View();
         }
@@ -56,9 +56,11 @@ namespace LevelOne.Controllers
             if (usuario.Roles == "Admin")
                 return RedirectToAction("Index", "Admin");
             else if (usuario.Roles == "Tecnico")
-                return RedirectToAction("Index", "Tecnico");
+                return RedirectToAction("Index", "Home");
+            else if (usuario.Roles == "Cliente")
+                return RedirectToAction("Index", "Home");
             else
-                return RedirectToAction("Index", "Cliente");
+                return RedirectToAction("Index", "Login");
         }
 
         [HttpGet]
@@ -66,6 +68,12 @@ namespace LevelOne.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             return RedirectToAction("Login");
+        }
+
+        [HttpGet]
+        public IActionResult AcessoNegado()
+        {
+            return View();
         }
     }
 }

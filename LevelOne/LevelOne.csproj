@@ -8,10 +8,36 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="9.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.21" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="9.0.10">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Views\Usuarios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="Views\Usuarios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Usuarios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Views\Usuarios\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Views\Usuarios\Create.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Usuarios\Delete.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Usuarios\Details.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Usuarios\Edit.cshtml" />
+    <_ContentIncludedByDefault Remove="Views\Usuarios\Index.cshtml" />
   </ItemGroup>
 
 </Project>
