@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LevelOne.Models
 {
@@ -20,9 +21,9 @@ namespace LevelOne.Models
         [Required, PasswordPropertyText, MinLength(8)]
         public string Senha { get; set; }
 
-        public bool Ativo { get; set; }
+        public bool Ativo { get; set; } = true;
 
-        [Required]
+        [NotMapped]
         public List<UsuarioPermissaoModel> UsuarioPermissoes { get; set; } = new List<UsuarioPermissaoModel>();
     }
 }
