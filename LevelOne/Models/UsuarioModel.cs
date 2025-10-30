@@ -23,6 +23,6 @@ namespace LevelOne.Models
         public bool Ativo { get; set; }
 
         [Required]
-        public string Roles { get; set; }
+        public List<UsuarioPermissaoModel> UsuarioPermissoes { get; set; } = new List<UsuarioPermissaoModel>();
     }
 }
