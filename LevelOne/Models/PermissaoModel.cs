@@ -12,8 +12,9 @@ namespace LevelOne.Models
         public string Nome { get; set; } = String.Empty;
         public List<UsuarioPermissaoModel> UsuarioPermissoes { get; set; } = new List<UsuarioPermissaoModel>();
 
-        public PermissaoModel(string nome)
+        public PermissaoModel(int id,string nome)
         {
+            this.Id = id;
             this.Nome = nome;
         }
     }

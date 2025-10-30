@@ -37,9 +37,9 @@ namespace LevelOne.Data
 
             modelBuilder.Entity<PermissaoModel>()
                 .HasData(
-                    new PermissaoModel("Admin"),
-                    new PermissaoModel("Tecnico"),
-                    new PermissaoModel("Cliente")
+                    new PermissaoModel(1, "Admin"),
+                    new PermissaoModel(2, "Tecnico"),
+                    new PermissaoModel(3, "Cliente")
                 );
         }
     }
