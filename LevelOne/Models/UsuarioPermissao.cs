@@ -1,0 +1,10 @@
+﻿namespace LevelOne.Models
+{
+    public class UsuarioPermissao
+    {
+        public int UsuarioId { get; set; }
+        public UsuarioModel Usuario { get; set; }
+        public int PermissaoId { get; set; }
+        public PermissaoModel Permissao { get; set; }
+    }
+}
