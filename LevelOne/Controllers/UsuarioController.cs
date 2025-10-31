@@ -45,8 +45,11 @@ namespace LevelOne.Controllers
         }
 
         // GET: Usuario/Create
-        public IActionResult Create()
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
+            var permissoes = await _context.Permissoes.ToListAsync();
+            ViewBag.Permissoes = permissoes;
             return View();
         }
 
@@ -55,15 +58,26 @@ namespace LevelOne.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,email,Cpf,Senha,Ativo")] UsuarioModel usuarioModel)
+        public async Task<IActionResult> Create(UsuarioModel usuarioModel, List<int> permissoesSelecionadas)
         {
             if (ModelState.IsValid)
             {
                 usuarioModel.Senha = SenhaHelper.GerarHashParaSenha(usuarioModel.Senha);
                 _context.Add(usuarioModel);
                 await _context.SaveChangesAsync();
+
+                foreach (var permissao in permissoesSelecionadas)
+                {
+                    var usuarioPermissao = new UsuarioPermissaoModel(usuarioModel.Id, permissao);
+                    _context.UsuariosPermissoes.Add(usuarioPermissao);
+                }
+
+                await _context.SaveChangesAsync();
+                
                 return RedirectToAction(nameof(Index));
             }
+
+            ViewBag.Permissoes = await _context.Permissoes.ToListAsync();
             return View(usuarioModel);
         }
 
@@ -86,37 +100,37 @@ namespace LevelOne.Controllers
         // POST: Usuario/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,email,Cpf,Senha,Ativo")] UsuarioModel usuarioModel)
-        {
-            if (id != usuarioModel.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(usuarioModel);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!UsuarioModelExists(usuarioModel.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(usuarioModel);
-        }
+        // [HttpPost]
+        // [ValidateAntiForgeryToken]
+        // public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,email,Cpf,Senha,Ativo")] UsuarioModel usuarioModel)
+        // {
+        //     if (id != usuarioModel.Id)
+        //     {
+        //         return NotFound();
+        //     }
+        //
+        //     if (ModelState.IsValid)
+        //     {
+        //         try
+        //         {
+        //             _context.Update(usuarioModel);
+        //             await _context.SaveChangesAsync();
+        //         }
+        //         catch (DbUpdateConcurrencyException)
+        //         {
+        //             if (!UsuarioModelExists(usuarioModel.Id))
+        //             {
+        //                 return NotFound();
+        //             }
+        //             else
+        //             {
+        //                 throw;
+        //             }
+        //         }
+        //         return RedirectToAction(nameof(Index));
+        //     }
+        //     return View(usuarioModel);
+        // }
 
         // GET: Usuario/Delete/5
         public async Task<IActionResult> Delete(int? id)
