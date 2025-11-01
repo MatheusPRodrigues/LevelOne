@@ -93,13 +93,26 @@ namespace LevelOne.Controllers
                 .Include(u => u.UsuarioPermissoes)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
-            ViewBag.Permissoes = await _context.Permissoes .ToListAsync();
+            ViewBag.Permissoes = await _context.Permissoes.ToListAsync();
 
             if (usuarioModel == null)
             {
                 return NotFound();
             }
             return View(usuarioModel);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> AlterarSenha(int id)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+
+            ViewBag.UsuarioNome = usuario.Nome;
+            return View();
         }
 
         // POST: Usuario/Edit/5
@@ -110,15 +123,26 @@ namespace LevelOne.Controllers
         public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Ativo")] UsuarioModel usuarioModel, List<int> permissoes)
         {
             var usuario = await _context.Usuarios
+                .Include(u => u.UsuarioPermissoes)
                 .FirstOrDefaultAsync(u => u.Id == id);
 
+            ModelState.Remove("Cpf");
+            ModelState.Remove("Senha");
+            
             if (usuario is null)
             {
                 return NotFound();
             }
 
-            ModelState.Remove("Cpf");
-            ModelState.Remove("Senha");
+            if (!permissoes.Any())
+            {
+                ModelState.AddModelError("", "Pelo menos uma permissão deve ser selecionada.");
+                ViewBag.Permissoes = _context.Permissoes.ToList();
+
+                usuarioModel.Cpf = usuario.Cpf;
+
+                return View(usuarioModel);
+            }
 
             if (ModelState.IsValid)
             {
@@ -139,6 +163,8 @@ namespace LevelOne.Controllers
                         ));
                     }
 
+                    //_context.Entry(usuario).State = EntityState.Modified;
+
                     //_context.Update(usuarioModel);
                     await _context.SaveChangesAsync();
                 }
@@ -156,6 +182,38 @@ namespace LevelOne.Controllers
                 return RedirectToAction(nameof(Index));
             }
             return View(usuarioModel);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AlterarSenha(int id, string novaSenha, string confirmarSenha)
+        {
+            var usuario = await _context.Usuarios.FindAsync(id);
+
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+
+            if (String.IsNullOrEmpty(novaSenha) || novaSenha.Length < 8)
+            {
+                ModelState.AddModelError("", "A senha deve conter pelo menos 8 caracteres.");
+                ViewBag.UsuarioNome = usuario.Nome;
+                return View();  
+            }
+
+            if (novaSenha != confirmarSenha)
+            {
+                ModelState.AddModelError("", "As senhas não são iguais");
+                ViewBag.UsuarioNome = usuario.Nome;
+                return View();
+            }
+
+            usuario.Senha = SenhaHelper.GerarHashParaSenha(novaSenha);
+            _context.Update(usuario);
+            await _context.SaveChangesAsync();
+
+            TempData["Sucesso"] = "Senha alterada com sucesso!";
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Usuario/Delete/5

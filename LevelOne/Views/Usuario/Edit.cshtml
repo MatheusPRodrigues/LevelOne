@@ -8,7 +8,7 @@
 
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-4" >
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -42,9 +42,7 @@
                 @foreach (var permissao in ViewBag.Permissoes)
                 {
                     <div class="form-check">
-                        <input type="checkbox" name="PermissoesSelecionadas"
-                               value="@permissao.Id"
-                               class="form-check-input"
+                        <input class="form-check-input" type="checkbox" name="permissoes" value="@permissao.Id"                               
                                @(Model.UsuarioPermissoes.Any(p => p.PermissaoId == permissao.Id) ? "checked" : "") />
                         <label class="form-check-label">@permissao.Nome</label>
                     </div>

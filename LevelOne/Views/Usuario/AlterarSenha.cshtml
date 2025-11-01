@@ -1,0 +1,30 @@
+﻿@{
+    ViewData["Title"] = "Alterar Senha";
+}
+
+<h2>Alterar Senha - @ViewBag.UsuarioNome</h2>
+
+<form asp-action="AlterarSenha" method="post">
+    <div class="form-group">
+        <label for="novaSenha">Nova Senha</label>
+        <input type="password" name="novaSenha" class="form-control" required minlength="8" />
+    </div>
+
+    <div class="form-group">
+        <label for="confirmarSenha">Confirmar Nova Senha</label>
+        <input type="password" name="confirmarSenha" class="form-control" required minlength="8" />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Salvar</button>
+    <a asp-action="Index" class="btn btn-secondary mt-3">Cancelar</a>
+</form>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="text-danger mt-2">
+        @foreach (var erro in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <p>@erro.ErrorMessage</p>
+        }
+    </div>
+}
