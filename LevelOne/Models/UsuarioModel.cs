@@ -13,7 +13,7 @@ namespace LevelOne.Models
         public string Nome { get; set; }
 
         [Required, EmailAddress, MaxLength(200)]
-        public string email { get; set; }
+        public string Email { get; set; }
 
         [Required, StringLength(11)]
         public string Cpf { get; set; }

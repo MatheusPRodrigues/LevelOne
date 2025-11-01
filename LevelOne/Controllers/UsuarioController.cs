@@ -89,7 +89,12 @@ namespace LevelOne.Controllers
                 return NotFound();
             }
 
-            var usuarioModel = await _context.Usuarios.FindAsync(id);
+            var usuarioModel = await _context.Usuarios
+                .Include(u => u.UsuarioPermissoes)
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            ViewBag.Permissoes = await _context.Permissoes .ToListAsync();
+
             if (usuarioModel == null)
             {
                 return NotFound();
@@ -100,37 +105,58 @@ namespace LevelOne.Controllers
         // POST: Usuario/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        // [HttpPost]
-        // [ValidateAntiForgeryToken]
-        // public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,email,Cpf,Senha,Ativo")] UsuarioModel usuarioModel)
-        // {
-        //     if (id != usuarioModel.Id)
-        //     {
-        //         return NotFound();
-        //     }
-        //
-        //     if (ModelState.IsValid)
-        //     {
-        //         try
-        //         {
-        //             _context.Update(usuarioModel);
-        //             await _context.SaveChangesAsync();
-        //         }
-        //         catch (DbUpdateConcurrencyException)
-        //         {
-        //             if (!UsuarioModelExists(usuarioModel.Id))
-        //             {
-        //                 return NotFound();
-        //             }
-        //             else
-        //             {
-        //                 throw;
-        //             }
-        //         }
-        //         return RedirectToAction(nameof(Index));
-        //     }
-        //     return View(usuarioModel);
-        // }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Ativo")] UsuarioModel usuarioModel, List<int> permissoes)
+        {
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            if (usuario is null)
+            {
+                return NotFound();
+            }
+
+            ModelState.Remove("Cpf");
+            ModelState.Remove("Senha");
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    usuario.Nome = usuarioModel.Nome;
+                    usuario.Email = usuarioModel.Email;
+                    usuario.Ativo = usuarioModel.Ativo;
+
+                    // Atualiza permissões
+                    _context.UsuariosPermissoes.RemoveRange(usuario.UsuarioPermissoes);
+                    foreach (var permissao in permissoes)
+                    {
+                        _context.UsuariosPermissoes.Add(new UsuarioPermissaoModel
+                        (
+                            usuario.Id,
+                            permissao
+                        ));
+                    }
+
+                    //_context.Update(usuarioModel);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!UsuarioModelExists(usuarioModel.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(usuarioModel);
+        }
 
         // GET: Usuario/Delete/5
         public async Task<IActionResult> Delete(int? id)

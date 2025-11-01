@@ -1,12 +1,11 @@
 ﻿@model LevelOne.Models.UsuarioModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Editar Usuário";
 }
 
-<h1>Edit</h1>
+<h1>Editar Usuário</h1>
 
-<h4>UsuarioModel</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -19,33 +18,46 @@
                 <span asp-validation-for="Nome" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="email" class="control-label"></label>
-                <input asp-for="email" class="form-control" />
-                <span asp-validation-for="email" class="text-danger"></span>
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cpf" class="control-label"></label>
-                <input asp-for="Cpf" class="form-control" />
+                <input asp-for="Cpf" class="form-control" readonly/>
                 <span asp-validation-for="Cpf" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @* <div class="form-group">
                 <label asp-for="Senha" class="control-label"></label>
                 <input asp-for="Senha" class="form-control" />
                 <span asp-validation-for="Senha" class="text-danger"></span>
-            </div>
+            </div> *@
             <div class="form-group form-check">
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
                 </label>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label>Permissões</label>
+                @foreach (var permissao in ViewBag.Permissoes)
+                {
+                    <div class="form-check">
+                        <input type="checkbox" name="PermissoesSelecionadas"
+                               value="@permissao.Id"
+                               class="form-check-input"
+                               @(Model.UsuarioPermissoes.Any(p => p.PermissaoId == permissao.Id) ? "checked" : "") />
+                        <label class="form-check-label">@permissao.Nome</label>
+                    </div>
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar</a>
 </div>
 
