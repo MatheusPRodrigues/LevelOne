@@ -32,7 +32,7 @@ namespace LevelOne.Controllers
             if (usuario == null || !SenhaHelper.VerificarSenha(senha, usuario.Senha))
             {
                 ViewBag.Erro = "CPF ou senha inválidos!";
-                return View();
+                return View("Index");
             }
 
             var permissoes = await context.UsuariosPermissoes
@@ -68,7 +68,7 @@ namespace LevelOne.Controllers
             else if (permissoes.Contains("Tecnico"))
                 return RedirectToAction("Index", "Home");
             else if (permissoes.Contains("Cliente"))
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "Cliente");
             else
                 return RedirectToAction("Index", "Login");
         }
@@ -77,7 +77,7 @@ namespace LevelOne.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
