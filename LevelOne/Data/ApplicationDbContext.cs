@@ -13,7 +13,9 @@ namespace LevelOne.Data
         public DbSet<UsuarioModel> Usuarios { get; set; }
         public DbSet<PermissaoModel> Permissoes { get; set; }
         public DbSet<UsuarioPermissaoModel> UsuariosPermissoes { get; set; }
-
+        public DbSet<ChamadoModel> Chamados { get; set; }
+        public DbSet<MensagemModel> Mensagens { get; set; }
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -41,6 +43,18 @@ namespace LevelOne.Data
                     new PermissaoModel(2, "Tecnico"),
                     new PermissaoModel(3, "Cliente")
                 );
+
+            modelBuilder.Entity<ChamadoModel>()
+                .HasMany(c => c.Mensagens)
+                .WithOne(m => m.Chamado)
+                .HasForeignKey(m => m.ChamadoId)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UsuarioModel>()
+                .HasMany<MensagemModel>()
+                .WithOne(m => m.Usuario)
+                .HasForeignKey(m => m.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
