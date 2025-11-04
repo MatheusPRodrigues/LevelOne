@@ -14,8 +14,7 @@ public class MensagemModel
     public ChamadoModel Chamado { get; set; }
     
     [Required]
-    public int UsuarioId { get; set; }
-    [ForeignKey("Usuario")]
+    public int UsuarioId { get; set; }  
     public UsuarioModel Usuario { get; set; }
 
     [Required]

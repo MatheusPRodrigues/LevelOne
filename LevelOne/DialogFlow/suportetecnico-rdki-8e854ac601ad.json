@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "suportetecnico-rdki",
+  "private_key_id": "8e854ac601ad993b333f3f0559f0ade4adcb7329",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQDFM46znFsk2jKQ\nUU2dfVCdm0heaP0ggEscBcj1EqjGls0GCnqq7GZAdD1NJ5IvemYwrypOGXrkSnYe\n8JBAQsEgu9Iw85ngrW8SgBJDoBclOPb6Uckb3HnBJyoHq7g1AS6w12WtIcAuR6AT\nxJG48v6xvIWmCpXqjyxC/Zunn5+Dm9sUTgc50e2oW/tD4VyHFqoEblXEKSVPNFk0\nJ3Kzhn3xsNfGihrUIN/ShIUScPjYVHSHpiaPkrHzhxQb5+GDHHWE5x34dNQ4TgAe\nsGifOObT15oqS7RC1dlv4PIyw9bjFexZRH2KL00ZTmQOO+ocqwatfWPbjqnU3bEU\njHX/YVItAgMBAAECggEAKUzWdqRo7EtsapA0hqbPoup6Ghe3574mvNwzTaxWP50m\nnDzGmxR+h8Iwcn+2nI3waALPg+LPO4+itHEibOruIqpjZ5AlKop4KDI9YP9eyZNo\nGl3VlimzMDJBGbErl6JDQpMh/sQCSU8D5g/1ivwNPnEitnciFaldljwiBNWn5Tp4\nnvUXAFtk6WvRt0smHCxD/BHB6KzcfPMMVLS5RfckytJl1BYfD7PXB0ThQA046RbA\n/AxZjXm+NvuCwWEG388oCOSlXvAeGJ3awtavwenK4EUDmY7kUQz64pG47MAw5+cc\nOHpHHCuyI1GAOcl6hSww/rbchtlKQf8He8TTYR8WoQKBgQD/jkW/HHYTGNTIiW0X\nH6u/a2aMOaHPsZpDlzB355pGxXe4nrWC2GkfYvAO3UZJ0/1CiOayAerITeEfehEK\nkxNd0/wOnsrQFjelb3nqZS88UzMdaF49C82YnElxPBIUe6JTmnfvwAvsBi/ZDeCl\n6tdltWTdZwuGTnNCYcwWNxM+kQKBgQDFi1Drn5D3zNmDfKL3e0/LV1EkyPy5MJMJ\nzVOtdtrrvNx+99wlDnk/GtuKvB6bigC+nwNkJLLp2RgPfgXyxyaq0mTlOXZxwKJ0\n5TgRPDzZdM9s4kKOR0zRKNrRG/n0wtyhOuVxSowoNzBFM9I/UuRFpOwoiDFjO6MK\nMuitVgTf3QKBgBJEzG2eDj7NPqDbWiYWCIQVnG4XzJ55VsrQKxHXR6sZgLZ8+gLR\nj6pDu1+Ep/qtIeS4vq0o/+yzzI0gf8levDqv5cvxxBPeErpL3s5Hz3mjhPrsNBhv\nGJJ5UbK7lZtLP050s3A7LV8BDjiZCl8yC5XkwsIlFKjUQN8U+K753vFRAoGAc8xL\n3iNGZowVgWdBXJNTXh5MOaT7yE76EofjIk8G26N1GZSP3sUSO/Sxdyz5QDHwZ81s\nvnpoyn3xBbvZHsyxFPeKH3jEvr+uO5nWePv3q302zlv/qcmP9Rfe1S9yIZFMpdKR\nhwytBjH7wMU03NvpZg3cRZI4aTQfSa44CMvgxZ0CgYBWpE/gA1OqkFtQDlrF7Edt\n2VP3HPC88E5Vt84jadw828LS31XGWLl/zHQBPSBe+FWUjV8btZkp3ENcFiL/kDg6\ngD76JNiyblHTa4NzWO/AxIyT/Uv1eROG2nkNRhoQKrDgBvNPRKa5fX0RpzIJ1YUT\n8ocO6LPHQ1EX9dLQPqFs5Q==\n-----END PRIVATE KEY-----\n",
+  "client_email": "dialogflow-acess@suportetecnico-rdki.iam.gserviceaccount.com",
+  "client_id": "106219941051174883851",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/dialogflow-acess%40suportetecnico-rdki.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

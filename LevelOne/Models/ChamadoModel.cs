@@ -35,10 +35,8 @@ public class ChamadoModel
     
     [Required]
     public int IdCliente { get; set; }
-    [ForeignKey("Cliente")]
     public UsuarioModel Cliente { get; set; }
 
-    [ForeignKey("Cliente")]
     public int? IdTecnico { get; set; }
     public UsuarioModel? Tecnico { get; set; }
     

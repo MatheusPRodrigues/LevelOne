@@ -364,3 +364,6 @@ FodyWeavers.xsd
 
 # Tirando .idea
 **/.idea/
+
+# Retirando chave
+#/DialogFlow

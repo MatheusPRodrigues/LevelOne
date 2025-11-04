@@ -1,0 +1,32 @@
+using LevelOne.Services;
+using Microsoft.AspNetCore.Mvc;
+
+namespace LevelOne.Controllers;
+
+public class ChatbotController : Controller
+{
+    private readonly DialogFlowService _dialogFlowService;
+
+    public ChatbotController()
+    {
+        _dialogFlowService = new DialogFlowService();
+    }
+
+    public IActionResult Index()
+    {
+        return View();
+    }
+    
+    [HttpPost]
+    public async Task<IActionResult> EnviarMensagem(string mensagem)
+    {
+        if (String.IsNullOrWhiteSpace(mensagem))
+            return BadRequest("Mensagem vazia");
+
+        string sessionId = Guid.NewGuid().ToString();
+
+        var resposta = await _dialogFlowService.SendMessageAsync(sessionId, mensagem);
+
+        return Json(new { resposta });
+    }
+}

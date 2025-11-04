@@ -1,0 +1,35 @@
+@{
+    ViewData["Title"] = "Atendimento Virtual";
+}
+
+<div class="container mt-4">
+    <h2>Assistente Virtual</h2>
+
+    <div id="chat" style="border:1px solid #ccc; border-radius:10px; padding:15px; height:300px; overflow-y:auto;"></div>
+
+    <div class="mt-3 d-flex">
+        <input type="text" id="mensagem" class="form-control" placeholder="Digite sua mensagem..." />
+        <button id="enviar" class="btn btn-primary ms-2">Enviar</button>
+    </div>
+</div>
+
+<script>
+    document.getElementById("enviar").addEventListener("click", async () => {
+        const msg = document.getElementById("mensagem").value;
+        if (!msg.trim()) return;
+
+        const chat = document.getElementById("chat");
+        chat.innerHTML += `<div><b>Você:</b> ${msg}</div>`;
+        document.getElementById("mensagem").value = "";
+
+        const response = await fetch("/Chatbot/EnviarMensagem", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "mensagem=" + encodeURIComponent(msg)
+        });
+
+        const data = await response.json();
+        chat.innerHTML += `<div><b>Bot:</b> ${data.resposta}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+    });
+</script>
