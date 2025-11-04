@@ -14,6 +14,8 @@
 </div>
 
 <script>
+    let interacoes = 0; // contador de tentativas
+
     document.getElementById("enviar").addEventListener("click", async () => {
         const msg = document.getElementById("mensagem").value;
         if (!msg.trim()) return;
@@ -31,5 +33,21 @@
         const data = await response.json();
         chat.innerHTML += `<div><b>Bot:</b> ${data.resposta}</div>`;
         chat.scrollTop = chat.scrollHeight;
+
+        interacoes++;
+
+        // Após 3 tentativas, sugere abrir chamado
+        if (interacoes >= 3) {
+            chat.innerHTML += `
+                <div class="mt-2 alert alert-info">
+                    <b>Bot:</b> Parece que você ainda precisa de ajuda.
+                    <button class="btn btn-sm btn-success ms-2" onclick="window.location='@Url.Action("Criar", "Chamados")'">
+                        Abrir Chamado
+                    </button>
+                </div>
+            `;
+            interacoes = 0; // opcional, reinicia contador
+        }
     });
 </script>
+
