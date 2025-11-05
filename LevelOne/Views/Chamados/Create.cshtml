@@ -1,0 +1,35 @@
+@model LevelOne.Models.ChamadoModel
+
+@{
+    ViewData["Title"] = "Abrir Chamado";
+}
+
+<div class="container mt-4">
+    <h2>@ViewData["Title"]</h2>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-3">
+            <label asp-for="Titulo" class="form-label"></label>
+            <input asp-for="Titulo" class="form-control" />
+            <span asp-validation-for="Titulo" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Descricao" class="form-label"></label>
+            <textarea asp-for="Descricao" class="form-control" rows="6"></textarea>
+            <span asp-validation-for="Descricao" class="text-danger"></span>
+        </div>
+
+        <div class="form-check mb-3">
+            <input asp-for="Urgencia" class="form-check-input" />
+            <label asp-for="Urgencia" class="form-check-label">Marcar como urgente</label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrar Chamado</button>
+        <a asp-controller="Cliente" asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

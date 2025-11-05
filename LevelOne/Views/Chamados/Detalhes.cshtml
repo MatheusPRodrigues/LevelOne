@@ -1,0 +1,150 @@
+@model LevelOne.Models.ChamadoModel
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Detalhes do Chamado";
+    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+    bool isTecnico = User.IsInRole("Tecnico");
+    bool isCliente = User.IsInRole("Cliente");
+
+    string voltarAction = isTecnico ? "MeusChamadosTecnico" : "MeusChamadosCliente";
+    string voltarController = "Chamado";
+}
+
+<h2 class="mb-3">Detalhes do Chamado</h2>
+
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <h4 class="mb-3">@Model.Titulo</h4>
+
+        <dl class="row">
+            <dt class="col-sm-3">Descrição:</dt>
+            <dd class="col-sm-9">@Model.Descricao</dd>
+
+            <dt class="col-sm-3">Data de Abertura:</dt>
+            <dd class="col-sm-9">@Model.DataAbertura.ToString("dd/MM/yyyy HH:mm")</dd>
+
+            <dt class="col-sm-3">Urgência:</dt>
+            <dd class="col-sm-9">@(Model.Urgencia ? "Sim" : "Não")</dd>
+
+            <dt class="col-sm-3">Status:</dt>
+            <dd class="col-sm-9">@Model.StatusChamado</dd>
+
+            <dt class="col-sm-3">Cliente:</dt>
+            <dd class="col-sm-9">@Model.Cliente?.Nome</dd>
+
+            <dt class="col-sm-3">Técnico:</dt>
+            <dd class="col-sm-9">@(
+                Model.Tecnico != null ? Model.Tecnico.Nome : "Ainda não atribuído"
+            )</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="d-flex justify-content-between mb-3">
+    <a asp-action="@voltarAction" asp-controller="@voltarController" class="btn btn-secondary">
+        ← Voltar
+    </a>
+
+    @if (isTecnico && Model.IdTecnico == userId && Model.StatusChamado == LevelOne.Enums.StatusEnum.EmAtendimento)
+    {
+        <form asp-action="Finalizar" asp-route-id="@Model.Id" method="post" class="d-inline">
+            <button type="submit" class="btn btn-danger">Finalizar Chamado</button>
+        </form>
+    }
+</div>
+
+<hr />
+
+<h4>Mensagens</h4>
+
+<div id="mensagens-container" class="border rounded p-3 bg-light" style="max-height: 400px; overflow-y: auto;">
+    @if (Model.Mensagens.Any())
+    {
+        @foreach (var msg in Model.Mensagens.OrderBy(m => m.DataMensagem))
+        {
+            <div class="mb-2">
+                <strong>@msg.TipoUsuario:</strong> 
+                <span>@msg.Texto</span>
+                <small class="text-muted">(@msg.DataMensagem.ToString("dd/MM HH:mm"))</small>
+            </div>
+        }
+    }
+    else
+    {
+        <p class="text-muted" id="sem-mensagens">Nenhuma mensagem neste chamado ainda.</p>
+    }
+</div>
+
+@if (
+    (isCliente && Model.IdCliente == userId)
+    || (isTecnico && Model.IdTecnico == userId)
+)
+{
+    <form id="mensagemForm" class="mt-4">
+        <input type="hidden" name="chamadoId" value="@Model.Id" />
+        <div class="form-group">
+            <label for="texto">Enviar nova mensagem:</label>
+            <textarea name="texto" id="texto" class="form-control" rows="3" placeholder="Digite sua mensagem..."></textarea>
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Enviar</button>
+    </form>
+}
+else if (isTecnico && Model.IdTecnico == null)
+{
+    <p class="text-muted mt-3">Você precisa assumir este chamado antes de poder enviar mensagens.</p>
+}
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("mensagemForm");
+            const mensagensContainer = document.getElementById("mensagens-container");
+            const textoInput = document.getElementById("texto");
+
+            if (form) {
+                form.addEventListener("submit", async function (e) {
+                    e.preventDefault();
+
+                    const texto = textoInput.value.trim();
+                    const chamadoId = form.querySelector("[name='chamadoId']").value;
+
+                    if (!texto) return alert("Digite uma mensagem antes de enviar.");
+
+                    try {
+                        const response = await fetch("@Url.Action("EnviarMensagem", "Chamados")", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                            },
+                            body: JSON.stringify({ chamadoId, texto })
+                        });
+
+                        if (!response.ok) throw new Error("Erro ao enviar mensagem");
+
+                        const data = await response.json();
+
+                        // Remove aviso "Nenhuma mensagem ainda"
+                        const vazio = document.getElementById("sem-mensagens");
+                        if (vazio) vazio.remove();
+
+                        // Adiciona nova mensagem ao topo
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("mb-2");
+                        msgDiv.innerHTML = `<strong>${data.tipoUsuario}:</strong> ${data.texto} <small class="text-muted">(${data.dataMensagem})</small>`;
+                        mensagensContainer.appendChild(msgDiv);
+
+                        // Limpa campo e rola para o fim
+                        textoInput.value = "";
+                        mensagensContainer.scrollTop = mensagensContainer.scrollHeight;
+
+                    } catch (err) {
+                        console.error(err);
+                        alert("Erro ao enviar mensagem. Tente novamente.");
+                    }
+                });
+            }
+        });
+    </script>
+}

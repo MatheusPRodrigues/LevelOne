@@ -43,16 +43,18 @@ namespace LevelOne.Data
                     new PermissaoModel(2, "Tecnico"),
                     new PermissaoModel(3, "Cliente")
                 );
-
-            modelBuilder.Entity<ChamadoModel>()
-                .HasMany(c => c.Mensagens)
-                .WithOne(m => m.Chamado)
+            
+            // 🔹 Um Chamado pode ter várias Mensagens
+            modelBuilder.Entity<MensagemModel>()
+                .HasOne(m => m.Chamado)
+                .WithMany(c => c.Mensagens)
                 .HasForeignKey(m => m.ChamadoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<UsuarioModel>()
-                .HasMany<MensagemModel>()
-                .WithOne(m => m.Usuario)
+            // 🔹 Uma Mensagem pertence a um Usuário
+            modelBuilder.Entity<MensagemModel>()
+                .HasOne(m => m.Usuario)
+                .WithMany()
                 .HasForeignKey(m => m.UsuarioId)
                 .OnDelete(DeleteBehavior.Restrict);
         }

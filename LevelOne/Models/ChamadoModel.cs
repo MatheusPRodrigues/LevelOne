@@ -33,10 +33,11 @@ public class ChamadoModel
     [DisplayName("Status do Chamado")]
     public StatusEnum StatusChamado { get; set; } = StatusEnum.Aberto;
     
-    [Required]
+    [ForeignKey("Cliente")]
     public int IdCliente { get; set; }
     public UsuarioModel Cliente { get; set; }
 
+    [ForeignKey("Tecnico")]
     public int? IdTecnico { get; set; }
     public UsuarioModel? Tecnico { get; set; }
     

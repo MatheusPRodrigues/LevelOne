@@ -1,0 +1,44 @@
+@model IEnumerable<LevelOne.Models.ChamadoModel>
+
+@{
+    ViewData["Title"] = "Meus Chamados";
+}
+
+<h2 class="mb-4">Meus Chamados</h2>
+
+@if (Model.Any())
+{
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th>Título</th>
+            <th>Descrição</th>
+            <th>Data de Abertura</th>
+            <th>Urgência</th>
+            <th>Status</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var chamado in Model)
+        {
+            <tr>
+                <td>@chamado.Titulo</td>
+                <td>@chamado.Descricao</td>
+                <td>@chamado.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
+                <td>@(chamado.Urgencia ? "Sim" : "Não")</td>
+                <td>@chamado.StatusChamado</td>
+                <td>
+                    <a asp-action="Detalhes" asp-route-id="@chamado.Id" class="btn btn-primary btn-sm">
+                        Ver Detalhes
+                    </a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+else
+{
+    <p class="text-muted">Você ainda não possui chamados cadastrados.</p>
+}
