@@ -366,4 +366,5 @@ FodyWeavers.xsd
 **/.idea/
 
 # Ignorar todas as chaves JSON dentro de qualquer pasta DialogFlow
-**/DialogFlow/*.json
+/LevelOne/DialogFlow/*
+!/LevelOne/DialogFlow/.gitkeep
