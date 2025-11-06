@@ -48,7 +48,7 @@
 
     @if (isTecnico && Model.IdTecnico == userId && Model.StatusChamado == LevelOne.Enums.StatusEnum.EmAtendimento)
     {
-        <form asp-action="Finalizar" asp-route-id="@Model.Id" method="post" class="d-inline">
+        <form asp-action="FinalizarChamado" asp-route-id="@Model.Id" method="post" class="d-inline">
             <button type="submit" class="btn btn-danger">Finalizar Chamado</button>
         </form>
     }
@@ -75,24 +75,31 @@
         <p class="text-muted" id="sem-mensagens">Nenhuma mensagem neste chamado ainda.</p>
     }
 </div>
-
-@if (
-    (isCliente && Model.IdCliente == userId)
-    || (isTecnico && Model.IdTecnico == userId)
-)
+@if (Model.StatusChamado == LevelOne.Enums.StatusEnum.Finalizado)
 {
-    <form id="mensagemForm" class="mt-4">
-        <input type="hidden" name="chamadoId" value="@Model.Id" />
-        <div class="form-group">
-            <label for="texto">Enviar nova mensagem:</label>
-            <textarea name="texto" id="texto" class="form-control" rows="3" placeholder="Digite sua mensagem..."></textarea>
-        </div>
-        <button type="submit" class="btn btn-success mt-2">Enviar</button>
-    </form>
+    <div class="alert alert-warning">Este chamado foi finalizado. Não é possível enviar novas mensagens.</div>
 }
-else if (isTecnico && Model.IdTecnico == null)
+else
 {
-    <p class="text-muted mt-3">Você precisa assumir este chamado antes de poder enviar mensagens.</p>
+    <!-- Formulário de mensagens -->
+    @if (
+        (isCliente && Model.IdCliente == userId)
+        || (isTecnico && Model.IdTecnico == userId)
+    )
+    {
+        <form id="mensagemForm" class="mt-4">
+            <input type="hidden" name="chamadoId" value="@Model.Id"/>
+            <div class="form-group">
+                <label for="texto">Enviar nova mensagem:</label>
+                <textarea name="texto" id="texto" class="form-control" rows="3" placeholder="Digite sua mensagem..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-success mt-2">Enviar</button>
+        </form>
+    }
+    else if (isTecnico && Model.IdTecnico == null)
+    {
+        <p class="text-muted mt-3">Você precisa assumir este chamado antes de poder enviar mensagens.</p>
+    }
 }
 
 @section Scripts {

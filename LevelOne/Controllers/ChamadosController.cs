@@ -3,6 +3,7 @@ using LevelOne.Data;
 using LevelOne.Enums;
 using LevelOne.Models;
 using LevelOne.Models.DTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -217,5 +218,32 @@ public class ChamadosController : Controller
         {
             return BadRequest(new { erro = "Erro ao enviar mensagem: " + ex.Message });
         }
+    }
+    
+    [Authorize(Roles = "Tecnico")]
+    [HttpPost]
+    public async Task<IActionResult> FinalizarChamado(int id)
+    {
+        var chamado = await _context.Chamados.FindAsync(id);
+        if (chamado == null)
+        {
+            TempData["Erro"] = "Chamado não encontrado.";
+            return RedirectToAction("ExibirChamadosTecnicos");
+        }
+
+        if (chamado.StatusChamado == StatusEnum.Finalizado)
+        {
+            TempData["Erro"] = "Esse chamado já foi finalizado.";
+            return RedirectToAction("Detalhes", new { id = chamado.Id });
+        }
+
+        chamado.StatusChamado = StatusEnum.Finalizado;
+        chamado.DataEncerramento = DateTime.Now;
+
+        _context.Chamados.Update(chamado);
+        await _context.SaveChangesAsync();
+
+        TempData["Sucesso"] = "Chamado finalizado com sucesso!";
+        return RedirectToAction("ExibirChamadosTecnicos");
     }
 }
