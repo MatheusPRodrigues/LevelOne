@@ -365,5 +365,5 @@ FodyWeavers.xsd
 # Tirando .idea
 **/.idea/
 
-# Retirando chave
-/LevelOne/LevelOne/DialogFlow/*.json
+# Ignorar todas as chaves JSON dentro de qualquer pasta DialogFlow
+**/DialogFlow/*.json
