@@ -75,25 +75,51 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+
 @if (User.Identity.IsAuthenticated)
 {
     <script>
-        (function(){
-            const sessionTimeout = 1 * 60 * 1000; // 1 minuto para teste
-            const warningTime = 50 * 1000;        // alerta 10s antes
+        (function () {
+            const sessionTimeout = 1 * 60 * 1000; // 1 minuto total (teste)
+            const warningBefore = 10 * 1000;      // alerta 10s antes
+            let warningTimeout;
+            let logoutTimeout;
+            let lastActivityTime = Date.now();
 
-            setTimeout(() => {
-                alert("Sua sessão vai expirar em 10 segundos!");
-            }, warningTime);
+            function resetTimers() {
+                const now = Date.now();
+                lastActivityTime = now;
 
-            setTimeout(async () => {
-                alert("Sua sessão expirou! Redirecionando para o login.");
-                await fetch('/Login/Logout/');
-                window.location.href = '/Login';
-            }, sessionTimeout);
+                clearTimeout(warningTimeout);
+                clearTimeout(logoutTimeout);
+
+                // Agenda o alerta de aviso
+                warningTimeout = setTimeout(() => {
+                    const remaining = Math.floor((sessionTimeout - (Date.now() - lastActivityTime)) / 1000);
+                    if (remaining > 0) {
+                        alert(`Sua sessão vai expirar em ${remaining} segundos se não houver atividade!`);
+                    }
+                }, sessionTimeout - warningBefore);
+
+                // Agenda o logout
+                logoutTimeout = setTimeout(async () => {
+                    alert("Sua sessão expirou por inatividade. Redirecionando para o login.");
+                    await fetch('/Login/Logout/');
+                    window.location.href = '/Login';
+                }, sessionTimeout);
+            }
+
+            // Detecta atividade do usuário
+            const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
+            events.forEach(evt => document.addEventListener(evt, resetTimers));
+
+            // Inicializa os timers
+            resetTimers();
         })();
     </script>
 }
+
+
 @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
