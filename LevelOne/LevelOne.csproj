@@ -43,6 +43,7 @@
 
   <ItemGroup>
     <Folder Include="DialogFlow\" />
+    <Folder Include="Views\Cliente\" />
   </ItemGroup>
 
 </Project>

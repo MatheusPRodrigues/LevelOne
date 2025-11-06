@@ -7,8 +7,8 @@
     bool isTecnico = User.IsInRole("Tecnico");
     bool isCliente = User.IsInRole("Cliente");
 
-    string voltarAction = isTecnico ? "MeusChamadosTecnico" : "MeusChamadosCliente";
-    string voltarController = "Chamado";
+    string voltarAction = isTecnico ? "ExibirChamadosTecnicos" : "ExibirChamadosClientes";
+    string voltarController = "Chamados";
 }
 
 <h2 class="mb-3">Detalhes do Chamado</h2>

@@ -1,5 +1,6 @@
 using System.Diagnostics;
 using LevelOne.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LevelOne.Controllers
@@ -13,6 +14,24 @@ namespace LevelOne.Controllers
             _logger = logger;
         }
 
+        [Authorize(Roles = "Cliente")]
+        public IActionResult IndexCliente()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Tecnico")]
+        public IActionResult IndexTecnico()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "Admin")]
+        public IActionResult IndexAdmin()
+        {
+            return View();
+        }
+        
         public IActionResult Index()
         {
             return View();

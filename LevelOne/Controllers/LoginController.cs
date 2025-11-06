@@ -64,11 +64,11 @@ namespace LevelOne.Controllers
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
 
             if (permissoes.Contains("Admin"))
-                return RedirectToAction("Index", "Admin");
+                return RedirectToAction("IndexAdmin", "Home");
             else if (permissoes.Contains("Tecnico"))
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("IndexTecnico", "Home");
             else if (permissoes.Contains("Cliente"))
-                return RedirectToAction("Index", "Cliente");
+                return RedirectToAction("IndexCliente", "Home");
             else
                 return RedirectToAction("Index", "Login");
         }
