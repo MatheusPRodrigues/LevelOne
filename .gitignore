@@ -366,4 +366,4 @@ FodyWeavers.xsd
 **/.idea/
 
 # Retirando chave
-/DialogFlow/*.json
+/LevelOne/DialogFlow/*.json
