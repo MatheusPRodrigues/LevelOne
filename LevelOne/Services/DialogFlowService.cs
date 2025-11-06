@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Google.Apis.Auth.OAuth2;
 using Google.Cloud.Dialogflow.V2;
 
@@ -8,10 +9,14 @@ public class DialogFlowService
     private readonly SessionsClient _sessionsClient;
     private readonly string _projectId;
 
-    public DialogFlowService()
+    public DialogFlowService(IConfiguration configuration)
     {
-        var credentialPath =
-            Path.Combine(Directory.GetCurrentDirectory(), "DialogFlow", "suportetecnico-rdki-8e854ac601ad.json");
+        var directoryPath =
+            Path.Combine(Directory.GetCurrentDirectory(), configuration["DialogFlow:CredentialPath"]);
+        
+        var jsonFile = Directory.GetFiles(directoryPath).FirstOrDefault();
+
+        var credentialPath = Path.Combine(directoryPath, jsonFile);
 
         var credential = GoogleCredential.FromFile(credentialPath);
         var builder = new SessionsClientBuilder
@@ -22,7 +27,7 @@ public class DialogFlowService
         _sessionsClient = builder.Build();
         
         using var stream = new StreamReader(credentialPath);
-        var json = System.Text.Json.JsonDocument.Parse(stream.ReadToEnd());
+        var json = JsonDocument.Parse(stream.ReadToEnd());
         _projectId = json.RootElement.GetProperty("project_id").GetString();
     }
     

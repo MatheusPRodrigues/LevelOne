@@ -1,4 +1,5 @@
 using LevelOne.Data;
+using LevelOne.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -35,6 +36,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         };
     });
 
+builder.Services.AddScoped<DialogFlowService>();
 
 var app = builder.Build();
 

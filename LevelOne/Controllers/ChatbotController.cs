@@ -7,9 +7,9 @@ public class ChatbotController : Controller
 {
     private readonly DialogFlowService _dialogFlowService;
 
-    public ChatbotController()
+    public ChatbotController(DialogFlowService dialogFlowService)
     {
-        _dialogFlowService = new DialogFlowService();
+        _dialogFlowService = dialogFlowService;
     }
 
     public IActionResult Index()
