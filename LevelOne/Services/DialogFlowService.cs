@@ -14,7 +14,7 @@ public class DialogFlowService
         var directoryPath =
             Path.Combine(Directory.GetCurrentDirectory(), configuration["DialogFlow:CredentialPath"]);
         
-        var jsonFile = Directory.GetFiles(directoryPath, "*.json'").FirstOrDefault();
+        var jsonFile = Directory.GetFiles(directoryPath, "*.json").FirstOrDefault();
 
         var credentialPath = Path.Combine(directoryPath, jsonFile);
 
