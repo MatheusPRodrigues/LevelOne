@@ -8,9 +8,11 @@ using Microsoft.EntityFrameworkCore;
 using LevelOne.Data;
 using LevelOne.Models;
 using LevelOne.Helpers;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LevelOne.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class UsuarioController : Controller
     {
         private readonly ApplicationDbContext _context;

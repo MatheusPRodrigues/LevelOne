@@ -1,8 +1,10 @@
 using LevelOne.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LevelOne.Controllers;
 
+[Authorize(Roles = "Cliente")]
 public class ChatbotController : Controller
 {
     private readonly DialogFlowService _dialogFlowService;

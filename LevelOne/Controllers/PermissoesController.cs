@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LevelOne.Data;
 using LevelOne.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LevelOne.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class PermissoesController : Controller
     {
         private readonly ApplicationDbContext _context;

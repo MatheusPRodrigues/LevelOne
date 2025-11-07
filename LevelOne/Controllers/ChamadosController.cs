@@ -18,18 +18,15 @@ public class ChamadosController : Controller
         _context = context;
     }
 
-    // GET
-    // public IActionResult Index()
-    // {
-    //     return View();
-    // }
-
+    [Authorize(Roles = "Cliente")]
     [HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
+    [Authorize(Roles = "Cliente")]
+    [HttpPost]
     public IActionResult Create(ChamadoModel chamado)
     {
 
@@ -56,9 +53,11 @@ public class ChamadosController : Controller
         _context.SaveChanges();
 
         TempData["Sucesso"] = "Chamado criado com sucesso!";
-        return RedirectToAction("Index", "Cliente");
+        return RedirectToAction("ExibirChamadosClientes");
     }
 
+    [Authorize(Roles = "Cliente")]
+    [HttpGet]
     public async Task<IActionResult> ExibirChamadosClientes()
     {
         var claim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -78,7 +77,8 @@ public class ChamadosController : Controller
         return View(chamados);
     }
 
-    // 🔹 TÉCNICO: Lista chamados abertos, em andamento e finalizados
+    [Authorize(Roles = "Tecnico")]
+    [HttpGet]
     public async Task<IActionResult> ExibirChamadosTecnicos()
     {
         var claim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -90,19 +90,16 @@ public class ChamadosController : Controller
 
         int idTecnico = int.Parse(claim.Value);
 
-        // Chamados abertos (sem técnico)
         var chamadosAbertos = await _context.Chamados
             .Where(c => c.IdTecnico == null && c.StatusChamado == StatusEnum.Aberto)
             .OrderByDescending(c => c.DataAbertura)
             .ToListAsync();
 
-        // Chamados em andamento (do técnico logado)
         var chamadosEmAndamento = await _context.Chamados
             .Where(c => c.IdTecnico == idTecnico && c.StatusChamado == StatusEnum.EmAtendimento)
             .OrderByDescending(c => c.DataAbertura)
             .ToListAsync();
 
-        // Chamados finalizados (do técnico logado)
         var chamadosFinalizados = await _context.Chamados
             .Where(c => c.IdTecnico == idTecnico && c.StatusChamado == StatusEnum.Finalizado)
             .OrderByDescending(c => c.DataEncerramento)
@@ -115,7 +112,7 @@ public class ChamadosController : Controller
         return View("ExibirChamadosTecnicos");
     }
 
-    // 🔹 TÉCNICO: Assumir um chamado aberto
+    [Authorize(Roles = "Tecnico")]
     [HttpPost]
     public async Task<IActionResult> Assumir(int id)
     {
@@ -147,8 +144,9 @@ public class ChamadosController : Controller
         TempData["Sucesso"] = "Chamado assumido com sucesso!";
         return RedirectToAction("ExibirChamadosTecnicos");
     }
-
-    // 🔹 Detalhes do chamado (restrito para técnicos que assumiram ou cliente dono)
+    
+    [Authorize(Roles = "Tecnico,Cliente")]
+    [HttpGet]
     public async Task<IActionResult> Detalhes(int id)
     {
         var claim = User.FindFirst(ClaimTypes.NameIdentifier);
@@ -187,6 +185,7 @@ public class ChamadosController : Controller
         return View("Detalhes", chamado);
     }
 
+    [Authorize(Roles = "Tecnico,Cliente")]
     [HttpPost]
     public async Task<IActionResult> EnviarMensagem([FromBody] MensagemDTO mensagemDto)
     {
