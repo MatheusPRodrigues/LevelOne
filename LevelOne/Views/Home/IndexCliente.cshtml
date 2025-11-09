@@ -2,8 +2,46 @@
     ViewData["Title"] = "Área do Cliente";
 }
 
-<p>Esta é sua página inicial como cliente.</p>
-<a class="nav-link text-dark" asp-area="" asp-controller="Chatbot" asp-action="Index">Chatbot</a>
+<div class="area-cliente">
+    <!-- Seção Chatbot -->
+    <section class="cliente-section chatbot-section d-flex align-items-center">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-md-7 text-md-start text-center">
+                    <h2 class="fw-bold text-primary mb-3">Converse com o Assistente Virtual</h2>
+                    <p class="lead text-muted">
+                        Nosso chatbot está sempre pronto para ajudar você com dúvidas, suporte e orientações rápidas.
+                    </p>
+                    <a asp-area="" asp-controller="Chatbot" asp-action="Index"
+                       class="btn btn-primary mt-3 px-4 py-2 rounded-pill">
+                        Acessar Chatbot
+                    </a>
+                </div>
+                <div class="col-md-5 text-center mt-4 mt-md-0">
+                    <img src="~/img/Chatbot.png" alt="Chatbot" class="img-fluid rounded-4 ">
+                </div>
+            </div>
+        </div>
+    </section>
 
-<p>Visualize seus chamados</p>
-<a class="nav-link text-dark" asp-area="" asp-controller="Chamados" asp-action="ExibirChamadosClientes">Meus Chamados</a>
+    <!-- Seção Chamados -->
+    <section class="cliente-section chamados-section d-flex align-items-center">
+        <div class="container py-5">
+            <div class="row align-items-center flex-md-row-reverse">
+                <div class="col-md-7 text-md-end text-center">
+                    <h2 class="fw-bold text-primary mb-3">Visualize seus Chamados</h2>
+                    <p class="lead text-muted">
+                        Acompanhe seus chamados em andamento e tenha controle total do histórico de atendimentos.
+                    </p>
+                    <a asp-area="" asp-controller="Chamados" asp-action="ExibirChamadosClientes"
+                       class="btn btn-primary mt-3 px-4 py-2 rounded-pill">
+                        Ver Chamados
+                    </a>
+                </div>
+                <div class="col-md-5 text-center mt-4 mt-md-0">
+                    <img src="~/images/support-illustration.png" alt="Chamados" class="img-fluid rounded-4 shadow-sm">
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

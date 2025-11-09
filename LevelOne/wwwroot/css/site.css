@@ -28,3 +28,276 @@ body {
 .nav-item {
     color: white;
 }
+
+/*FORM DE LOGIN*/
+
+/* Card estilizado */
+.login-card {
+    background-color: #f0f6ff;
+    border-radius: 12px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Divisor */
+.divider {
+    border: none;
+    border-top: 2px solid #2f3e5f;
+    margin: 0 0 1.5rem 0;
+    opacity: 0.3;
+}
+
+/* Título e labels */
+.login-card h3,
+.login-card .form-label {
+    color: #2f3e5f;
+    font-weight: 600;
+}
+
+/* Campos */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #cdd9f1;
+    padding: 10px;
+    background-color: #ffffff;
+    transition: 0.2s;
+}
+
+.form-control:focus {
+    border-color: #5b8ef7;
+    box-shadow: 0 0 5px rgba(91, 142, 247, 0.4);
+}
+
+/* Ícone de olho */
+.position-relative {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    top: 65%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #2f3e5f;
+    opacity: 0.7;
+    transition: 0.2s;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+
+/* Botão */
+.btn-login {
+    background-color: #2e5db8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    transition: 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #244a94;
+    transform: scale(1.02);
+}
+
+/* Alerta */
+.alert {
+    border-radius: 8px;
+}
+
+
+/* ESTILIZAÇÃO CHATBOT */
+
+/* Estilo geral do chat */
+.chat-box {
+    border: 1px solid #cbd5e1;
+    border-radius: 12px;
+    padding: 15px;
+    height: 400px;
+    overflow-y: auto;
+    background-color: #f8faff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Mensagens do bot */
+.msg-bot {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.msg-bot-icon {
+    font-size: 1.5rem;
+    color: #2e5db8;
+    margin-right: 10px;
+}
+
+.msg-bot-text {
+    background-color: #e2ebff;
+    color: #1c2e4a;
+    border-radius: 10px;
+    padding: 10px 14px;
+    max-width: 80%;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Mensagens do usuário */
+.msg-user {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.msg-user-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    max-width: 80%;
+}
+
+.msg-user-text {
+    background-color: #2e5db8;
+    color: white;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 0.95rem;
+    word-wrap: break-word;
+    text-align: right;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+
+.msg-user-icon {
+    font-size: 1.5rem;
+    color: #2e5db8;
+    margin-left: 10px;
+}
+
+/* Nome acima da mensagem */
+.msg-name {
+    font-size: 0.8rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+    color: #4b5563;
+}
+
+/* Animação de carregamento */
+.typing-indicator {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: #2e5db8;
+}
+
+.typing-indicator .bi-robot {
+    font-size: 1.5rem;
+    margin-right: 10px;
+}
+
+.dots {
+    display: inline-block;
+    width: 30px;
+    text-align: left;
+}
+
+.dots span {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    margin: 0 1px;
+    background-color: #2e5db8;
+    border-radius: 50%;
+    animation: blink 1.4s infinite both;
+}
+
+.dots span:nth-child(2) {
+    animation-delay: 0.2s;
+}
+.dots span:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+@keyframes blink {
+    0%, 80%, 100% { opacity: 0; }
+    40% { opacity: 1; }
+}
+
+/* Scroll custom */
+.chat-box::-webkit-scrollbar {
+    width: 6px;
+}
+.chat-box::-webkit-scrollbar-thumb {
+    background-color: #a9bde3;
+    border-radius: 6px;
+}
+
+
+/* AREA DO CLIENTE */
+
+/* Layout inspirado no Starbucks */
+/* Layout geral */
+.area-cliente {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* Seções */
+.cliente-section {
+    min-height: 70vh;
+    padding: 3rem 0;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+    background-color: #f0f6ff; /* azul bem claro */
+    box-shadow: 0 8px 20px rgba(0, 0, 80, 0.08);
+    transition: all 0.3s ease;
+}
+
+.cliente-section:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 80, 0.12);
+}
+
+/* Títulos e textos */
+h2 {
+    font-size: 2rem;
+    color: #2e5db8;
+}
+
+p.lead {
+    font-size: 1.1rem;
+    color: #5c6b7a;
+}
+
+/* Botões */
+.btn-primary {
+    background-color: #2e5db8;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #244a93;
+}
+
+/* Imagens */
+img {
+    max-width: 85%;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    .cliente-section {
+        text-align: center;
+        padding: 2rem 1rem;
+    }
+
+    img {
+        max-width: 70%;
+        margin-top: 1.5rem;
+    }
+}
