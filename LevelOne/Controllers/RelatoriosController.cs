@@ -21,6 +21,7 @@ public class RelatoriosController : Controller
     {
         var chamados = await _context.Chamados
             .Include(c => c.Cliente)
+            .Include(c => c.Tecnico)
             .ToListAsync();
 
         var bytes = _pdfService.GerarRelatorioEmPdf(chamados);

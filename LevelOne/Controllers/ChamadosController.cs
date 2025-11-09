@@ -92,7 +92,8 @@ public class ChamadosController : Controller
 
         var chamadosAbertos = await _context.Chamados
             .Where(c => c.IdTecnico == null && c.StatusChamado == StatusEnum.Aberto)
-            .OrderByDescending(c => c.DataAbertura)
+            .OrderByDescending(c => c.Urgencia)
+            .ThenBy(c => c.DataAbertura)
             .ToListAsync();
 
         var chamadosEmAndamento = await _context.Chamados

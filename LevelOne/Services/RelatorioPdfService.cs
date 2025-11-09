@@ -13,12 +13,13 @@ namespace LevelOne.Services
     {
         public RelatorioPdfService()
         {
-            // Defina a licença (community) uma vez na inicialização da aplicação
+            // garante que a licença community está setada (pode duplicar com Program.cs sem problema)
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
         public byte[] GerarRelatorioEmPdf(List<ChamadoModel> chamados)
         {
+            // prepara listas por status (ajuste os nomes conforme seu enum real)
             var totalChamados = chamados.Count;
             var abertos = chamados.Where(c => c.StatusChamado == StatusEnum.Aberto).ToList();
             var andamento = chamados.Where(c => c.StatusChamado == StatusEnum.EmAtendimento).ToList();
@@ -30,41 +31,36 @@ namespace LevelOne.Services
             {
                 container.Page(page =>
                 {
-                    page.Margin(30);
                     page.Size(PageSizes.A4);
-                    page.PageColor(Colors.White);
-                    page.DefaultTextStyle(x => x.FontSize(11).FontColor(Colors.Black));
+                    page.Margin(30);
+                    page.DefaultTextStyle(x => x.FontSize(11));
 
                     // Cabeçalho
-                    page.Header().Column(column =>
+                    page.Header().Column(col =>
                     {
-                        column.Item().Text("Relatório de Chamados").FontSize(20).Bold().FontColor(Colors.Blue.Medium).AlignCenter();
-                        column.Item().Text($"Gerado em: {dataGeracao}").FontSize(9).FontColor(Colors.Grey.Darken1).AlignCenter();
+                        col.Item().Text("RELATÓRIO DE CHAMADOS").FontSize(18).Bold().AlignCenter();
+                        col.Item().Text($"Gerado em: {dataGeracao}").FontSize(9).FontColor(Colors.Grey.Darken1).AlignCenter();
                     });
 
                     // Conteúdo
-                    page.Content()
-                        .PaddingTop(10)
-                        .Stack(stack =>
-                        {
-                            // Resumo geral
-                            stack.Item().Element(ResumoGeral(totalChamados, abertos.Count, andamento.Count, finalizados.Count));
+                    page.Content().PaddingTop(10).Column(content =>
+                    {
+                        // resumo
+                        content.Item().Element(c => CriarResumo(c, totalChamados, abertos.Count, andamento.Count, finalizados.Count));
 
-                            // Sumário (com links)
-                            stack.Item().PaddingTop(10).Element(Sumario());
+                        // sumário simples (sem links por enquanto)
+                        content.Item().PaddingTop(8).Element(CriarSumarioSimples());
 
-                            // Seções (cada uma é navegável por id)
-                            if (abertos.Any())
-                                stack.Item().PaddingTop(10).Element(Section("Abertos", "Chamados Abertos", abertos, Colors.Red.Medium));
+                        // seções com tabelas
+                        if (abertos.Any())
+                            content.Item().PaddingTop(10).Element(c => CriarSecao(c, "Chamados Abertos", abertos, Colors.Red.Medium));
+                        if (andamento.Any())
+                            content.Item().PaddingTop(10).Element(c => CriarSecao(c, "Chamados em Andamento", andamento, Colors.Orange.Medium));
+                        if (finalizados.Any())
+                            content.Item().PaddingTop(10).Element(c => CriarSecao(c, "Chamados Finalizados", finalizados, Colors.Green.Medium));
+                    });
 
-                            if (andamento.Any())
-                                stack.Item().PaddingTop(10).Element(Section("Andamento", "Chamados em Andamento", andamento, Colors.Orange.Medium));
-
-                            if (finalizados.Any())
-                                stack.Item().PaddingTop(10).Element(Section("Finalizados", "Chamados Finalizados", finalizados, Colors.Green.Medium));
-                        });
-
-                    // Rodapé
+                    // rodapé com paginação
                     page.Footer().AlignCenter().Text(x =>
                     {
                         x.Span("Página ");
@@ -78,111 +74,91 @@ namespace LevelOne.Services
             return document.GeneratePdf();
         }
 
-        // ---------- Helpers retornando Action<IContainer> (compatível com Element(...)) ----------
+        // ------------------------------
+        // Helpers: cada um recebe IContainer
+        // ------------------------------
+        private void CriarResumo(IContainer container, int total, int abertos, int andamento, int finalizados)
+        {
+            container.Padding(6).Table(table =>
+            {
+                table.ColumnsDefinition(columns =>
+                {
+                    columns.RelativeColumn();
+                    columns.RelativeColumn();
+                    columns.RelativeColumn();
+                    columns.RelativeColumn();
+                });
 
-        private static Action<IContainer> ResumoGeral(int total, int abertos, int andamento, int finalizados)
+                // cabeçalho
+                table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Total de Chamados").Bold();
+                table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Abertos").Bold();
+                table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Em Andamento").Bold();
+                table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Finalizados").Bold();
+
+                // valores
+                table.Cell().Padding(6).Text(total.ToString()).FontSize(13).Bold();
+                table.Cell().Padding(6).Text(abertos.ToString()).FontSize(13).Bold().FontColor(Colors.Red.Darken2);
+                table.Cell().Padding(6).Text(andamento.ToString()).FontSize(13).Bold().FontColor(Colors.Orange.Darken2);
+                table.Cell().Padding(6).Text(finalizados.ToString()).FontSize(13).Bold().FontColor(Colors.Green.Darken2);
+            });
+        }
+
+        private Action<IContainer> CriarSumarioSimples()
         {
             return container =>
             {
-                container.Padding(8).Border(1).BorderColor(Colors.Grey.Lighten3).CornerRadius(4).Table(table =>
+                container.Stack(stack =>
+                {
+                    stack.Spacing(4);
+                    stack.Item().Text("Sumário").FontSize(13).Bold().FontColor(Colors.Blue.Darken2);
+                    stack.Item().Text("1. Chamados Abertos");
+                    stack.Item().Text("2. Chamados em Andamento");
+                    stack.Item().Text("3. Chamados Finalizados");
+                });
+            };
+        }
+
+        private void CriarSecao(IContainer container, string titulo, List<ChamadoModel> chamados, string cor)
+        {
+            container.Stack(stack =>
+            {
+                stack.Spacing(6);
+                stack.Item().Text(titulo).FontSize(14).Bold().FontColor(cor);
+                stack.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
+
+                // Tabela
+                stack.Item().Table(table =>
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.RelativeColumn();
-                        columns.RelativeColumn();
-                        columns.RelativeColumn();
-                        columns.RelativeColumn();
+                        columns.RelativeColumn(3); // título
+                        columns.RelativeColumn(2); // cliente
+                        columns.RelativeColumn(2); // tecnico
+                        columns.RelativeColumn(2); // status
+                        columns.RelativeColumn(2); // data abertura
                     });
 
-                    // Linha de cabeçalho
-                    table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Total de Chamados").Bold();
-                    table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Abertos").Bold();
-                    table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Em Andamento").Bold();
-                    table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Finalizados").Bold();
-
-                    // Linha de valores (com destaque de cores)
-                    table.Cell().Padding(6).Text(total.ToString()).FontSize(14).Bold().FontColor(Colors.Blue.Darken2);
-                    table.Cell().Padding(6).Text(abertos.ToString()).FontSize(14).Bold().FontColor(Colors.Red.Darken2);
-                    table.Cell().Padding(6).Text(andamento.ToString()).FontSize(14).Bold().FontColor(Colors.Orange.Darken2);
-                    table.Cell().Padding(6).Text(finalizados.ToString()).FontSize(14).Bold().FontColor(Colors.Green.Darken2);
-                });
-            };
-        }
-
-        private static Action<IContainer> Sumario()
-        {
-            return container =>
-            {
-                container.PaddingTop(8).Column(col =>
-                {
-                    col.Item().Text("Sumário").FontSize(14).Bold().FontColor(Colors.Grey.Darken2);
-
-                    col.Item().PaddingTop(6).Row(row =>
+                    // cabeçalho
+                    table.Header(header =>
                     {
-                        // Cada entrada usa Hyperlink + NavigateTo para saltar à Section
-                        row.RelativeItem().Text(text =>
-                        {
-                            text.Span("• ").FontSize(12);
-                            text.Hyperlink("Chamados Abertos", "Abertos").FontSize(12).FontColor(Colors.Blue.Medium);
-                        });
-
-                        row.RelativeItem().Text(text =>
-                        {
-                            text.Span("• ").FontSize(12);
-                            text.Hyperlink("Chamados em Andamento", "Andamento").FontSize(12).FontColor(Colors.Blue.Medium);
-                        });
-
-                        row.RelativeItem().Text(text =>
-                        {
-                            text.Span("• ").FontSize(12);
-                            text.Hyperlink("Chamados Finalizados", "Finalizados").FontSize(12).FontColor(Colors.Blue.Medium);
-                        });
+                        header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Título").Bold();
+                        header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Cliente").Bold();
+                        header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Técnico").Bold();
+                        header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Status").Bold();
+                        header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Data Abertura").Bold();
                     });
-                });
-            };
-        }
 
-        private static Action<IContainer> Section(string id, string titulo, List<ChamadoModel> chamados, string cor)
-        {
-            return container =>
-            {
-                // Define o destino de navegação com Section(id)
-                container.Section(id).PaddingVertical(6).Stack(stack =>
-                {
-                    stack.Item().Text(titulo).FontSize(16).Bold().FontColor(cor);
-                    stack.Item().PaddingBottom(6).LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-
-                    // Tabela de chamados
-                    stack.Item().Table(table =>
+                    // linhas
+                    foreach (var c in chamados)
                     {
-                        table.ColumnsDefinition(columns =>
-                        {
-                            columns.RelativeColumn(3); // Título
-                            columns.RelativeColumn(3); // Cliente
-                            columns.RelativeColumn(2); // Status
-                            columns.RelativeColumn(2); // Data Abertura
-                        });
-
-                        // Cabeçalho
-                        table.Header(header =>
-                        {
-                            header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Título").Bold();
-                            header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Cliente").Bold();
-                            header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Status").Bold();
-                            header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Data Abertura").Bold();
-                        });
-
-                        // Linhas
-                        foreach (var c in chamados)
-                        {
-                            table.Cell().Padding(6).Text(c.Titulo ?? "-");
-                            table.Cell().Padding(6).Text(c.Cliente?.Nome ?? "-");
-                            table.Cell().Padding(6).Text(c.StatusChamado.ToString());
-                            table.Cell().Padding(6).Text(c.DataAbertura.ToString("dd/MM/yyyy"));
-                        }
-                    });
+                        table.Cell().Padding(6).Text(c.Titulo ?? "-");
+                        table.Cell().Padding(6).Text(c.Cliente?.Nome ?? "-");
+                        table.Cell().Padding(6).Text(c.Tecnico?.Nome ?? "-");
+                        table.Cell().Padding(6).Text(c.StatusChamado.ToString());
+                        table.Cell().Padding(6).Text(c.DataAbertura.ToString("dd/MM/yyyy"));
+                    }
                 });
-            };
+            });
         }
     }
 }
