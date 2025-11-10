@@ -606,3 +606,136 @@ p.lead {
     box-shadow: 0 0 0 3px rgba(42, 77, 143, 0.25);
 }
 
+
+/* // ÁREA DO TÉCNICO \\ */
+/* Layout geral */
+.area-tecnico {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* Seções */
+.tecnico-section {
+    min-height: 70vh;
+    padding: 3rem 0;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+    background-color: #f0f6ff; /* azul bem claro */
+    box-shadow: 0 8px 20px rgba(0, 0, 80, 0.08);
+    transition: all 0.3s ease;
+}
+
+.tecnico-section:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 80, 0.12);
+}
+
+/* Títulos e textos */
+.tecnico-section h2 {
+    font-size: 2rem;
+    color: #2e5db8;
+}
+
+.tecnico-section p.lead {
+    font-size: 1.1rem;
+    color: #5c6b7a;
+}
+
+/* Botões */
+.btn-primary {
+    background-color: #2e5db8;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #244a93;
+}
+
+.btn-secondary {
+    background-color: #5c7ee5;
+    border: none;
+    color: white;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #4666ca;
+}
+
+
+/* // PÁGINAS DE RELATÓRIOS \\ */
+/* Container principal */
+.relatorio-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #f8faff;
+    border-radius: 16px;
+    padding: 2rem 1rem 4rem;
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+/* Título principal */
+.titulo-relatorio {
+    font-size: 2rem;
+    color: #2e5db8;
+}
+
+/* Cartões dos gráficos */
+.grafico-card {
+    width: 420px;
+    border-radius: 16px;
+    background-color: #ffffff;
+    border: 1px solid #e5ecf5;
+    transition: all 0.3s ease;
+}
+
+.grafico-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 80, 0.08);
+}
+
+.grafico-card canvas {
+    min-height: 320px;
+}
+
+/* Card de resumo */
+.resumo-card {
+    max-width: 600px;
+    margin: 0 auto;
+    border-radius: 16px;
+    background-color: #ffffff;
+    border: 1px solid #e5ecf5;
+}
+
+/* Lista de resumo */
+.resumo-card .list-group-item {
+    border: none;
+    font-size: 1rem;
+}
+
+.resumo-card .list-group-item strong {
+    color: #2e5db8;
+}
+
+/* Botões */
+.botoes-relatorio .btn {
+    font-weight: 500;
+    border-radius: 30px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s ease-in-out;
+}
+
+.botoes-relatorio .btn:hover {
+    transform: translateY(-2px);
+}
+
+.btn-outline-primary {
+    border-color: #2e5db8;
+    color: #2e5db8;
+}
+
+.btn-outline-primary:hover {
+    background-color: #2e5db8;
+    color: #fff;
+}

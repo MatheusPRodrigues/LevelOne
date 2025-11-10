@@ -2,10 +2,34 @@
     ViewData["Title"] = "Área do Técnico";
 }
 
-<p>Esta é sua página inicial como técnico.</p>
-<a class="nav-link text-dark" asp-area="" asp-controller="Chamados" asp-action="ExibirChamadosTecnicos">Exibir chamados</a>
+<div class="area-tecnico">
+    <!-- Seção de Chamados -->
+    <section class="tecnico-section chamados-section d-flex align-items-center">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <!-- Imagem à esquerda -->
+                <div class="col-md-5 text-center mt-4 mt-md-0">
+                    <img src="~/img/Pessoa.png" alt="Painel Técnico" class="img-fluid rounded-4">
+                </div>
 
-<p>Relátorios</p>
-<a asp-controller="Relatorios" asp-action="RelatorioChamadoEmPdf" class="btn btn-danger">
-    <i class="bi bi-file-earmark-pdf"></i> Gerar Relatório PDF
-</a>
+                <!-- Texto à direita -->
+                <div class="col-md-7 text-md-start text-center">
+                    <h2 class="fw-bold text-primary mb-3">Gerencie Chamados e Relátorios</h2>
+                    <p class="lead text-muted">
+                        Visualize, assuma e acompanhe os chamados de suporte técnico em tempo real.
+                    </p>
+                    <div class="d-flex flex-column align-items-md-start align-items-center mt-3 gap-2">
+                        <a asp-area="" asp-controller="Chamados" asp-action="ExibirChamadosTecnicos"
+                           class="btn btn-primary px-4 py-2 rounded-pill w-auto">
+                            Gerenciar Chamados
+                        </a>
+                        <a asp-controller="Relatorios" asp-action="Index"
+                           class="btn btn-secondary px-4 py-2 rounded-pill w-auto">
+                            Relatórios
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

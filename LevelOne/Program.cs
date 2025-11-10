@@ -38,6 +38,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 
 builder.Services.AddScoped<DialogFlowService>();
 builder.Services.AddScoped<RelatorioPdfService>();
+builder.Services.AddScoped<RelatorioXlsService>();
 
 var app = builder.Build();
 
