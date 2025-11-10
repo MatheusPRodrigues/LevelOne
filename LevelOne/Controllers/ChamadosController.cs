@@ -91,17 +91,20 @@ public class ChamadosController : Controller
         int idTecnico = int.Parse(claim.Value);
 
         var chamadosAbertos = await _context.Chamados
+            .Include(c => c.Cliente)
             .Where(c => c.IdTecnico == null && c.StatusChamado == StatusEnum.Aberto)
             .OrderByDescending(c => c.Urgencia)
             .ThenBy(c => c.DataAbertura)
             .ToListAsync();
 
         var chamadosEmAndamento = await _context.Chamados
+            .Include(c => c.Cliente)
             .Where(c => c.IdTecnico == idTecnico && c.StatusChamado == StatusEnum.EmAtendimento)
             .OrderByDescending(c => c.DataAbertura)
             .ToListAsync();
 
         var chamadosFinalizados = await _context.Chamados
+            .Include(c => c.Cliente)
             .Where(c => c.IdTecnico == idTecnico && c.StatusChamado == StatusEnum.Finalizado)
             .OrderByDescending(c => c.DataEncerramento)
             .ToListAsync();

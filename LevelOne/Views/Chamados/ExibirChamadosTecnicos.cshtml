@@ -5,118 +5,147 @@
     var finalizados = ViewBag.ChamadosFinalizados as List<LevelOne.Models.ChamadoModel>;
 }
 
-<h2>Painel do Técnico</h2>
+<div class="chamados-container mt-4">
+    <h2 class="mb-4 text-center text-primary">Painel do Técnico</h2>
 
-<hr />
+    <div class="text-center mb-4">
+        <label for="filtroChamado" class="fw-semibold me-2 text-primary">Filtrar chamados:</label>
+        <select id="filtroChamado" class="form-select d-inline-block w-auto border-primary text-primary">
+            <option value="abertos">Abertos</option>
+            <option value="andamento">Em Andamento</option>
+            <option value="finalizados">Finalizados</option>
+        </select>
+    </div>
 
-<h4>Chamados Abertos</h4>
-@if (abertos.Any())
-{
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Data Abertura</th>
-                <th>Urgência</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var chamado in abertos)
-            {
-                <tr>
-                    <td>@chamado.Titulo</td>
-                    <td>@chamado.Descricao</td>
-                    <td>@chamado.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@(chamado.Urgencia ? "Sim" : "Não")</td>
-                    <td>
-                        <form asp-action="Assumir" asp-route-id="@chamado.Id" method="post">
-                            <button type="submit" class="btn btn-warning btn-sm">Assumir</button>
-                        </form>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p class="text-muted">Nenhum chamado aberto no momento.</p>
-}
+    <!-- Chamados Abertos -->
+    <div id="abertos" class="tabela-chamados">
+        @if (abertos != null && abertos.Any())
+        {
+            <div class="table-responsive chamado-tabela-wrapper">
+                <table class="table chamado-tabela">
+                    <thead>
+                        <tr>
+                            <th>Solicitante</th>
+                            <th>Título</th>
+                            <th>Descrição</th>
+                            <th>Data de Abertura</th>
+                            <th>Urgência</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chamado in abertos)
+                        {
+                            <tr>
+                                <td>@chamado.Cliente.Nome</td>
+                                <td class="titulo">@chamado.Titulo</td>
+                                <td class="descricao">@chamado.Descricao</td>
+                                <td>@chamado.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@(chamado.Urgencia ? "Sim" : "Não")</td>
+                                <td class="text-center">
+                                    <form asp-action="Assumir" asp-route-id="@chamado.Id" method="post">
+                                        <button type="submit" class="btn-detalhes btn-sm">Assumir</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted text-center">Nenhum chamado aberto no momento.</p>
+        }
+    </div>
 
-<hr />
+    <!-- Chamados em Andamento -->
+    <div id="andamento" class="tabela-chamados d-none">
+        @if (andamento != null && andamento.Any())
+        {
+            <div class="table-responsive chamado-tabela-wrapper">
+                <table class="table chamado-tabela">
+                    <thead>
+                        <tr>
+                            <th>Solicitante</th>
+                            <th>Título</th>
+                            <th>Descrição</th>
+                            <th>Data de Abertura</th>
+                            <th>Urgência</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chamado in andamento)
+                        {
+                            <tr>
+                                <td>@chamado.Cliente.Nome</td>
+                                <td class="titulo">@chamado.Titulo</td>
+                                <td class="descricao">@chamado.Descricao</td>
+                                <td>@chamado.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@(chamado.Urgencia ? "Sim" : "Não")</td>
+                                <td class="text-center">
+                                    <a asp-action="Detalhes" asp-route-id="@chamado.Id" class="btn-detalhes btn-sm">Ver Detalhes</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted text-center">Você não está atendendo nenhum chamado no momento.</p>
+        }
+    </div>
 
-<h4>Meus Chamados em Andamento</h4>
-@if (andamento.Any())
-{
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Data Abertura</th>
-                <th>Urgência</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var chamado in andamento)
-            {
-                <tr>
-                    <td>@chamado.Titulo</td>
-                    <td>@chamado.Descricao</td>
-                    <td>@chamado.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@(chamado.Urgencia ? "Sim" : "Não")</td>
-                    <td>
-                        <a asp-action="Detalhes" asp-route-id="@chamado.Id" class="btn btn-success btn-sm">
-                            Ver Detalhes
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p class="text-muted">Você não está atendendo nenhum chamado no momento.</p>
-}
+    <!-- Chamados Finalizados -->
+    <div id="finalizados" class="tabela-chamados d-none">
+        @if (finalizados != null && finalizados.Any())
+        {
+            <div class="table-responsive chamado-tabela-wrapper">
+                <table class="table chamado-tabela">
+                    <thead>
+                        <tr>
+                            <th>Solicitante</th>
+                            <th>Título</th>
+                            <th>Descrição</th>
+                            <th>Data de Abertura</th>
+                            <th>Data de Encerramento</th>
+                            <th class="text-center">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var chamado in finalizados)
+                        {
+                            <tr>
+                                <td>@chamado.Cliente.Nome</td>
+                                <td class="titulo">@chamado.Titulo</td>
+                                <td class="descricao">@chamado.Descricao</td>
+                                <td>@chamado.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td>@chamado.DataEncerramento?.ToString("dd/MM/yyyy HH:mm")</td>
+                                <td class="text-center">
+                                    <a asp-action="Detalhes" asp-route-id="@chamado.Id" class="btn-detalhes btn-sm">Ver Detalhes</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+        else
+        {
+            <p class="text-muted text-center">Nenhum chamado finalizado por você até o momento.</p>
+        }
+    </div>
+</div>
 
-<hr />
-
-<h4>Chamados Finalizados</h4>
-@if (finalizados.Any())
-{
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Data Abertura</th>
-                <th>Data Encerramento</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var chamado in finalizados)
-            {
-                <tr>
-                    <td>@chamado.Titulo</td>
-                    <td>@chamado.Descricao</td>
-                    <td>@chamado.DataAbertura.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>@chamado.DataEncerramento?.ToString("dd/MM/yyyy HH:mm")</td>
-                    <td>
-                        <a asp-action="Detalhes" asp-route-id="@chamado.Id" class="btn btn-secondary btn-sm">
-                            Ver Detalhes
-                        </a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-else
-{
-    <p class="text-muted">Nenhum chamado finalizado por você até o momento.</p>
+@section Scripts {
+    <script>
+        document.getElementById("filtroChamado").addEventListener("change", function () {
+            const valor = this.value;
+            document.querySelectorAll(".tabela-chamados").forEach(div => div.classList.add("d-none"));
+            document.getElementById(valor).classList.remove("d-none");
+        });
+    </script>
 }
