@@ -284,20 +284,297 @@ p.lead {
     background-color: #244a93;
 }
 
-/* Imagens */
-img {
-    max-width: 85%;
+
+/* // FORM DE CRIAÇÃO DE CHAMADO \\ */
+.chamado-container {
+    max-width: 600px;
+}
+
+.chamado-card {
+    background-color: #f0f6ff; /* azul bem claro */
+    border: 1px solid #d0e3ff;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 4px 10px rgba(30, 90, 160, 0.2);
+}
+
+.chamado-card h3 {
+    color: #2a4d8f;
+    font-weight: 600;
+}
+
+.chamado-card hr {
+    border-top: 1px solid #2a4d8f;
+    opacity: 0.3;
+    margin-bottom: 1.5rem;
+}
+
+.chamado-card .form-label {
+    color: #2a4d8f;
+    font-weight: 500;
+}
+
+.chamado-card .form-control {
+    border: 1px solid #c9dafd;
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 10px;
+}
+
+.chamado-card .form-control:focus {
+    box-shadow: 0 0 6px rgba(42, 77, 143, 0.3);
+    border-color: #2a4d8f;
+}
+
+.chamado-card .form-check-label {
+    color: #2a4d8f;
+}
+
+/* Botões */
+.btn-enviar {
+    background-color: #2a4d8f;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-enviar:hover {
+    background-color: #244a93;
+}
+
+.btn-cancelar {
+    background-color: #5c7ee5;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.btn-cancelar:hover {
+    background-color: #4666ca;
+}
+
+
+/* // EXIBIÇÃO DE CHAMADOS DO CLIENTE \\ */
+.chamados-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Wrapper da tabela */
+.chamado-tabela-wrapper {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+    width: 100%;
+}
+
+/* Tabela */
+.chamado-tabela {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    table-layout: fixed;
+}
+
+/* Cabeçalho */
+.chamado-tabela thead {
+    background-color: #2a4d8f;
+    color: #ffffff;
+    text-align: center;
+    font-weight: 600;
+}
+
+.chamado-tabela th {
+    padding: 14px 10px;
+    white-space: nowrap;
+    border-bottom: 3px solid #d0e3ff;
+}
+
+/* Corpo da tabela */
+.chamado-tabela td {
+    background-color: #f7faff;
+    padding: 14px 10px;
+    color: #2a4d8f;
+    vertical-align: middle;
+    border-top: 1px solid #d0e3ff;
+    border-bottom: 1px solid #d0e3ff;
+    border-right: 1px solid #e0ebff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Primeira coluna arredondada à esquerda */
+.chamado-tabela td:first-child {
+    border-left: 1px solid #e0ebff;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+
+/* Última coluna arredondada à direita */
+.chamado-tabela td:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+/* Colunas com delimitação específica */
+.chamado-tabela td.titulo {
+    max-width: 220px; /* limite para título */
+}
+
+.chamado-tabela td.descricao {
+    max-width: 280px; /* limite para descrição */
+}
+
+/* Linhas alternadas */
+.chamado-tabela tbody tr:nth-child(even) td {
+    background-color: #eef4ff;
+}
+
+/* Hover */
+.chamado-tabela tbody tr:hover td {
+    background-color: #e1edff;
+    transition: background-color 0.25s ease-in-out;
+}
+
+/* Botão */
+.btn-detalhes {
+    background-color: #2a4d8f;
+    border: none;
+    color: white;
+    border-radius: 6px;
+    transition: 0.25s ease-in-out;
+    padding: 6px 14px;
+    display: inline-block;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+.btn-detalhes:hover {
+    background-color: #244a93;
+    transform: translateY(-1px);
 }
 
 /* Responsividade */
 @media (max-width: 768px) {
-    .cliente-section {
-        text-align: center;
-        padding: 2rem 1rem;
+    .chamado-tabela th,
+    .chamado-tabela td {
+        font-size: 0.9rem;
+        padding: 10px 6px;
     }
 
-    img {
-        max-width: 70%;
-        margin-top: 1.5rem;
+    .chamado-tabela td.titulo {
+        max-width: 160px;
     }
+
+    .chamado-tabela td.descricao {
+        max-width: 180px;
+    }
+
+    .btn-detalhes {
+        font-size: 0.85rem;
+        padding: 5px 10px;
+    }
+}
+
+
+/*// EXIBIÇÃO DE DETALHES DO CHAMADO \\*/
+.chamado-detalhes-container {
+    background-color: #f8fbff;
+    padding: 30px;
+    border-radius: 12px;
+}
+
+/* Cabeçalho */
+.titulo-principal {
+    color: #004aad;
+    font-weight: 600;
+}
+
+.chamado-card {
+    border: none;
+    background-color: #e8f0ff;
+    box-shadow: 0px 4px 10px rgba(0, 74, 173, 0.1);
+}
+
+.titulo-chamado {
+    color: #003c8f;
+    font-weight: 600;
+}
+
+/* Botões */
+.btn-voltar {
+    background-color: #005bba;
+    color: white;
+    font-weight: 500;
+    width: 120px;
+}
+
+.btn-enviar {
+    background-color: #004aad;
+    color: #fff;
+    font-weight: 500;
+    width: 120px;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+/* Mensagens */
+.mensagens-container {
+    background-color: #f1f6ff;
+    border: 1px solid #cfd9f0;
+    border-radius: 10px;
+    padding: 15px;
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.mensagem {
+    max-width: 45%; /* ainda mais estreito */
+    padding: 10px 14px;
+    border-radius: 15px;
+    margin-bottom: 10px;
+    word-wrap: break-word;
+}
+
+.mensagem-cliente {
+    background-color: #007bff;
+    color: white;
+    margin-left: auto;
+}
+
+.mensagem-cliente .mensagem-info small {
+    color: #eaf1ff; /* texto mais legível */
+}
+
+.mensagem-tecnico {
+    background-color: #e0ecff;
+    color: #003366;
+    margin-right: auto;
+}
+
+.mensagem-tecnico .mensagem-info small {
+    color: #6b6b6b;
+}
+
+.mensagem-info {
+    font-size: 0.85rem;
+    margin-bottom: 4px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.label-enviar {
+    color: #003366;
+    font-weight: 500;
 }

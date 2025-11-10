@@ -4,30 +4,35 @@
     ViewData["Title"] = "Abrir Chamado";
 }
 
-<div class="container mt-4">
-    <h2>@ViewData["Title"]</h2>
+<div class="container chamado-container mt-5">
+    <div class="chamado-card">
+        <h3 class="text-center mb-4">@ViewData["Title"]</h3>
+        <hr>
 
-    <form asp-action="Create" method="post">
-        <div class="mb-3">
-            <label asp-for="Titulo" class="form-label"></label>
-            <input asp-for="Titulo" class="form-control" />
-            <span asp-validation-for="Titulo" class="text-danger"></span>
-        </div>
+        <form asp-action="Create" method="post">
+            <div class="mb-3">
+                <label asp-for="Titulo" class="form-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
 
-        <div class="mb-3">
-            <label asp-for="Descricao" class="form-label"></label>
-            <textarea asp-for="Descricao" class="form-control" rows="6"></textarea>
-            <span asp-validation-for="Descricao" class="text-danger"></span>
-        </div>
+            <div class="mb-3">
+                <label asp-for="Descricao" class="form-label"></label>
+                <textarea asp-for="Descricao" class="form-control" rows="6"></textarea>
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
 
-        <div class="form-check mb-3">
-            <input asp-for="Urgencia" class="form-check-input" />
-            <label asp-for="Urgencia" class="form-check-label">Marcar como urgente</label>
-        </div>
+            <div class="form-check mb-3">
+                <input asp-for="Urgencia" class="form-check-input" />
+                <label asp-for="Urgencia" class="form-check-label">Marcar como urgente</label>
+            </div>
 
-        <button type="submit" class="btn btn-primary">Registrar Chamado</button>
-        <a asp-controller="Home" asp-action="IndexCliente" class="btn btn-secondary ms-2">Cancelar</a>
-    </form>
+            <div class="d-flex justify-content-between">
+                <a asp-controller="Home" asp-action="IndexCliente" class="btn btn-cancelar">Cancelar</a>
+                <button type="submit" class="btn btn-enviar">Registrar Chamado</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 @section Scripts {
