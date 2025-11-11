@@ -1040,3 +1040,341 @@ p.lead {
     background-color: #365fcb;
     transform: translateY(-1px);
 }
+
+
+/* // INDEX - PERMISSÃO \\ */
+.permissoes-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    border-radius: 12px;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* Título */
+.text-primary {
+    color: #2b4db8 !important;
+}
+
+/* Botão principal */
+.btn-primary {
+    background-color: #2b4db8;
+    border-color: #2b4db8;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+.btn-primary:hover {
+    background-color: #223d95;
+    transform: translateY(-1px);
+}
+
+/* Tabela */
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead {
+    background-color: #2b4db8;
+    color: #fff;
+}
+
+.table tbody tr:hover {
+    background-color: #f5f8ff;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    border-color: #e2e8f0;
+    padding: 12px;
+}
+
+/* Botões de ação */
+.btn-warning {
+    background-color: #f0ad4e;
+    border-color: #f0ad4e;
+    border-radius: 8px;
+}
+
+.btn-warning:hover {
+    background-color: #e49c34;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    border-color: #e74c3c;
+    border-radius: 8px;
+}
+
+.btn-danger:hover {
+    background-color: #cf3b2b;
+}
+
+
+/* // EDIT - PERMISSÃO \\ */
+.permissao-edit-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(30, 60, 120, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Títulos */
+.text-primary {
+    color: #2b4db8 !important;
+}
+
+/* Labels e inputs */
+.form-label {
+    color: #2b4db8;
+}
+
+.form-control {
+    border: 1px solid #c8d8ff;
+    border-radius: 10px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #2b4db8;
+    box-shadow: 0 0 6px rgba(43, 77, 184, 0.4);
+}
+
+/* Botões */
+.btn-primary {
+    background-color: #2b4db8;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #223d95;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+
+/* // DELETE - PERMISSÃO \\ */
+.permissao-delete-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(30, 60, 120, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Textos */
+.text-primary {
+    color: #2b4db8 !important;
+}
+
+.text-danger {
+    color: #dc3545 !important;
+}
+
+/* Área da permissão */
+.bg-light {
+    background-color: #f8f9fa !important;
+}
+
+/* Botões */
+.btn-danger {
+    background-color: #c82333;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-danger:hover {
+    background-color: #a71d2a;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+
+/* // CREATE - PERMISSÃO \\ */
+.permissao-create-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(30, 60, 120, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+/* Textos */
+.text-primary {
+    color: #1b3d99 !important;
+}
+
+.text-secondary {
+    color: #495057 !important;
+}
+
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Input */
+.form-control {
+    border-radius: 10px;
+    padding: 10px 12px;
+    border: 1px solid #b5c8f0;
+    transition: 0.3s;
+}
+
+.form-control:focus {
+    border-color: #1b3d99;
+    box-shadow: 0 0 0 0.2rem rgba(30, 80, 180, 0.15);
+}
+
+/* Botões */
+.btn-primary {
+    background-color: #1b3d99;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #0f2b77;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    border: none;
+    color: #fff;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #5a6268;
+}
+
+
+/* // ÁREA DO ADMINISTRADOR \\ */
+.area-admin {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background-color: #ffffff;
+    color: #333;
+}
+
+/* ===== Seção ===== */
+.admin-section {
+    min-height: 70vh;
+    padding: 3rem 0;
+    border-radius: 20px;
+    margin-bottom: 3rem;
+    background-color: #f0f6ff; /* Azul bem claro */
+    box-shadow: 0 8px 20px rgba(0, 0, 80, 0.08);
+    transition: all 0.3s ease;
+}
+
+.admin-section:hover {
+    box-shadow: 0 10px 24px rgba(0, 0, 80, 0.12);
+}
+
+/* ===== Títulos e textos ===== */
+h2 {
+    font-size: 2rem;
+    color: #2e5db8;
+}
+
+p.lead {
+    font-size: 1.1rem;
+    color: #5c6b7a;
+}
+
+/* ===== Botões ===== */
+.btn-primary {
+    background-color: #2e5db8;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #244a93;
+}
+
+.btn-secondary {
+    background-color: #5c7ee5;
+    border: none;
+    transition: 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #4666ca;
+}
+
+/* ===== Imagens ===== */
+img {
+    transition: transform 0.3s ease;
+}
+
+img:hover {
+    transform: scale(1.05);
+}
+
+/* ===== Responsividade ===== */
+@media (max-width: 768px) {
+    h2 {
+        font-size: 1.6rem;
+    }
+
+    p.lead {
+        font-size: 1rem;
+    }
+
+    .admin-section {
+        text-align: center;
+        padding: 2rem 1rem;
+    }
+}

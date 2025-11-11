@@ -9,12 +9,15 @@
 
     string voltarAction = isTecnico ? "ExibirChamadosTecnicos" : "ExibirChamadosClientes";
     string voltarController = "Chamados";
+
+    // Verifica se o chamado possui pelo menos uma mensagem do técnico
+    bool possuiMensagemTecnico = Model.Mensagens.Any(m => m.UsuarioId == userId);
 }
 
 <link rel="stylesheet" href="~/css/DetalhesChamado.css" />
 
 <div class="container mt-4 chamado-detalhes-container">
-    <h2 class="mb-3 titulo-principal">@ViewData["Title"]</h2>
+    <h2 class="mb-3 titulo-principal text-center">@ViewData["Title"]</h2>
 
     <div class="card shadow-sm mb-4 chamado-card">
         <div class="card-body">
@@ -37,14 +40,14 @@
                 <dd class="col-sm-9">@Model.Cliente?.Nome</dd>
 
                 <dt class="col-sm-3">Técnico:</dt>
-                <dd class="col-sm-9">@(
-                    Model.Tecnico != null ? Model.Tecnico.Nome : "Ainda não atribuído"
-                )</dd>
+                <dd class="col-sm-9">
+                    @(Model.Tecnico != null ? Model.Tecnico.Nome : "Ainda não atribuído")
+                </dd>
             </dl>
         </div>
     </div>
 
-    <h4 class="titulo-mensagens">Mensagens</h4>
+    <h4 class="titulo-mensagens mb-3 text-center">Mensagens</h4>
 
     <div id="mensagens-container" class="mensagens-container">
         @if (Model.Mensagens.Any())
@@ -53,6 +56,7 @@
             {
                 var isClienteMsg = msg.TipoUsuario == "Cliente";
                 var msgClasse = isClienteMsg ? "mensagem-cliente" : "mensagem-tecnico";
+
                 <div class="mensagem @msgClasse">
                     <div class="mensagem-info">
                         <strong>@msg.TipoUsuario</strong>
@@ -64,29 +68,54 @@
         }
         else
         {
-            <p class="text-muted" id="sem-mensagens">Nenhuma mensagem neste chamado ainda.</p>
+            <p class="text-muted text-center" id="sem-mensagens">Nenhuma mensagem neste chamado ainda.</p>
         }
     </div>
 
+    @* 🔒 Caso o chamado esteja finalizado *@
     @if (Model.StatusChamado == LevelOne.Enums.StatusEnum.Finalizado)
     {
-        <div class="alert alert-warning mt-3">Este chamado foi finalizado. Não é possível enviar novas mensagens.</div>
+        <div class="alert alert-warning mt-3 text-center">
+            Este chamado foi finalizado. Não é possível enviar novas mensagens.
+        </div>
     }
     else
     {
+        @* 📬 Formulário de envio de mensagens *@
         @if ((isCliente && Model.IdCliente == userId) || (isTecnico && Model.IdTecnico == userId))
         {
             <form id="mensagemForm" class="mt-4">
-                <input type="hidden" name="chamadoId" value="@Model.Id"/>
+                <input type="hidden" name="chamadoId" value="@Model.Id" />
+
                 <div class="form-group">
                     <label for="texto" class="label-enviar">Enviar nova mensagem:</label>
                     <textarea name="texto" id="texto" class="form-control" rows="3" placeholder="Digite sua mensagem..."></textarea>
                 </div>
-                <div class="d-flex justify-content-between mt-2">
+
+                <div class="d-flex justify-content-between mt-3 align-items-center">
                     <a asp-action="@voltarAction" asp-controller="@voltarController" class="btn btn-voltar">← Voltar</a>
                     <button type="submit" class="btn btn-enviar">Enviar</button>
                 </div>
             </form>
+
+            @* 🔧 Botão de Finalizar — fora do form principal *@
+            @if (isTecnico && Model.IdTecnico == userId)
+            {
+                <div class="mt-4 text-end">
+                    @if (possuiMensagemTecnico)
+                    {
+                        <form asp-action="FinalizarChamado" asp-route-id="@Model.Id" method="post">
+                            <button type="submit" class="btn btn-danger">Finalizar Chamado</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-danger" disabled title="Envie ao menos uma mensagem antes de finalizar.">
+                            Finalizar Chamado
+                        </button>
+                    }
+                </div>
+            }
         }
         else if (isTecnico && Model.IdTecnico == null)
         {
@@ -101,15 +130,19 @@
             const form = document.getElementById("mensagemForm");
             const mensagensContainer = document.getElementById("mensagens-container");
             const textoInput = document.getElementById("texto");
+            const btnEnviar = form?.querySelector(".btn-enviar");
 
-            if (form) {
-                form.addEventListener("submit", async function (e) {
-                    e.preventDefault();
+            if (btnEnviar && form) {
+                btnEnviar.addEventListener("click", async function (e) {
+                    e.preventDefault(); // 🔹 Impede o submit padrão (apenas botão Enviar)
 
                     const texto = textoInput.value.trim();
                     const chamadoId = form.querySelector("[name='chamadoId']").value;
 
-                    if (!texto) return alert("Digite uma mensagem antes de enviar.");
+                    if (!texto) {
+                        alert("Digite uma mensagem antes de enviar.");
+                        return;
+                    }
 
                     try {
                         const response = await fetch("@Url.Action("EnviarMensagem", "Chamados")", {
@@ -125,9 +158,11 @@
 
                         const data = await response.json();
 
+                        // Remove aviso de "sem mensagens"
                         const vazio = document.getElementById("sem-mensagens");
                         if (vazio) vazio.remove();
 
+                        // Cria nova mensagem dinamicamente
                         const msgDiv = document.createElement("div");
                         msgDiv.classList.add("mensagem", data.tipoUsuario === "Cliente" ? "mensagem-cliente" : "mensagem-tecnico");
                         msgDiv.innerHTML = `
@@ -136,6 +171,7 @@
                                 <small>${data.dataMensagem}</small>
                             </div>
                             <div class="mensagem-texto">${data.texto}</div>`;
+
                         mensagensContainer.appendChild(msgDiv);
 
                         textoInput.value = "";
