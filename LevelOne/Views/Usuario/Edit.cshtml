@@ -4,58 +4,69 @@
     ViewData["Title"] = "Editar Usuário";
 }
 
-<h1>Editar Usuário</h1>
+<div class="usuario-editar-container mt-5">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 600px; border-radius: 14px;">
+        <h2 class="text-center text-primary fw-bold mb-4">
+            <i class="bi bi-person-gear me-2"></i>Editar Usuário
+        </h2>
 
-<hr />
-<div class="row">
-    <div class="col-md-4" >
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <form asp-action="Edit" class="needs-validation">
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
             <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Nome" class="control-label"></label>
-                <input asp-for="Nome" class="form-control" />
-                <span asp-validation-for="Nome" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label asp-for="Nome" class="form-label fw-semibold text-secondary"></label>
+                <input asp-for="Nome" class="form-control campo-azul" placeholder="Digite o nome completo" />
+                <span asp-validation-for="Nome" class="text-danger small"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label fw-semibold text-secondary"></label>
+                <input asp-for="Email" class="form-control campo-azul" placeholder="exemplo@email.com" />
+                <span asp-validation-for="Email" class="text-danger small"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="Cpf" class="control-label"></label>
-                <input asp-for="Cpf" class="form-control" readonly/>
-                <span asp-validation-for="Cpf" class="text-danger"></span>
+
+            <div class="mb-3">
+                <label asp-for="Cpf" class="form-label fw-semibold text-secondary"></label>
+                <input asp-for="Cpf" class="form-control campo-azul" readonly />
+                <span asp-validation-for="Cpf" class="text-danger small"></span>
             </div>
-            @* <div class="form-group">
-                <label asp-for="Senha" class="control-label"></label>
-                <input asp-for="Senha" class="form-control" />
-                <span asp-validation-for="Senha" class="text-danger"></span>
-            </div> *@
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
+
+            <div class="form-check mb-4">
+                <input class="form-check-input" asp-for="Ativo" id="ativoCheck" />
+                <label class="form-check-label fw-semibold text-secondary" for="ativoCheck">
+                    @Html.DisplayNameFor(model => model.Ativo)
                 </label>
             </div>
-            <div class="form-group">
-                <label>Permissões</label>
-                @foreach (var permissao in ViewBag.Permissoes)
-                {
-                    <div class="form-check">
-                        <input class="form-check-input" type="checkbox" name="permissoes" value="@permissao.Id"                               
-                               @(Model.UsuarioPermissoes.Any(p => p.PermissaoId == permissao.Id) ? "checked" : "") />
-                        <label class="form-check-label">@permissao.Nome</label>
-                    </div>
-                }
+
+            <div class="mb-4">
+                <label class="form-label fw-semibold text-secondary mb-2">
+                    <i class="bi bi-shield-lock me-1"></i> Permissões
+                </label>
+                <div class="permissoes-box p-3 rounded">
+                    @foreach (var permissao in ViewBag.Permissoes)
+                    {
+                        <div class="form-check mb-2">
+                            <input class="form-check-input" type="checkbox" name="permissoes" value="@permissao.Id"
+                                   @(Model.UsuarioPermissoes.Any(p => p.PermissaoId == permissao.Id) ? "checked" : "") />
+                            <label class="form-check-label">@permissao.Nome</label>
+                        </div>
+                    }
+                </div>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Salvar" class="btn btn-primary" />
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-save-fill me-1"></i> Salvar
+                </button>
             </div>
         </form>
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Voltar</a>
-</div>
-
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

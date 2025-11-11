@@ -739,3 +739,304 @@ p.lead {
     background-color: #2e5db8;
     color: #fff;
 }
+
+
+/* // INDEX USUÁRIOS \\ */
+.usuarios-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Wrapper da tabela */
+.usuario-tabela-wrapper {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    border-radius: 12px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
+
+/* Tabela */
+.usuario-tabela {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 6px;
+    table-layout: fixed;
+    text-align: center;
+}
+
+/* Cabeçalho */
+.usuario-tabela thead {
+    background-color: #2a4d8f;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.usuario-tabela th {
+    padding: 14px 10px;
+    white-space: nowrap;
+    border-bottom: 3px solid #d0e3ff;
+    text-align: center;
+}
+
+/* Corpo da tabela */
+.usuario-tabela td {
+    background-color: #f7faff;
+    padding: 12px 10px;
+    color: #2a4d8f;
+    border-top: 1px solid #d0e3ff;
+    border-bottom: 1px solid #d0e3ff;
+    border-right: 1px solid #e0ebff;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Linhas alternadas */
+.usuario-tabela tbody tr:nth-child(even) td {
+    background-color: #eef4ff;
+}
+
+/* Hover */
+.usuario-tabela tbody tr:hover td {
+    background-color: #e1edff;
+    transition: background-color 0.25s ease-in-out;
+}
+
+/* Botões */
+.btn {
+    border-radius: 6px;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+}
+
+/* Toast */
+.toast-body {
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+
+/* // EDIT - USUÁRIOS \\ */
+.usuario-editar-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Campos de entrada */
+.campo-azul {
+    border: 1px solid #bcd0f7;
+    border-radius: 8px;
+    transition: all 0.25s ease-in-out;
+    background-color: #f9fbff;
+}
+
+.campo-azul:focus {
+    border-color: #2a4d8f;
+    box-shadow: 0 0 6px rgba(42, 77, 143, 0.3);
+    background-color: #ffffff;
+}
+
+/* Caixa das permissões */
+.permissoes-box {
+    background-color: #f5f8ff;
+    border: 1px solid #d0e3ff;
+}
+
+/* Botões */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #2a4d8f;
+    border-color: #2a4d8f;
+}
+
+.btn-primary:hover {
+    background-color: #1e3970;
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e6ebf7;
+    color: #2a4d8f;
+    transform: translateY(-1px);
+}
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* // ALTERAR SENHA - USUÁRIOS \\ */
+.alterar-senha-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Campos */
+.campo-azul {
+    border: 1px solid #bcd0f7;
+    border-radius: 8px;
+    transition: all 0.25s ease-in-out;
+    background-color: #f9fbff;
+}
+
+.campo-azul:focus {
+    border-color: #2a4d8f;
+    box-shadow: 0 0 6px rgba(42, 77, 143, 0.3);
+    background-color: #ffffff;
+}
+
+/* Botões */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-primary {
+    background-color: #2a4d8f;
+    border-color: #2a4d8f;
+}
+
+.btn-primary:hover {
+    background-color: #1e3970;
+    transform: translateY(-1px);
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e6ebf7;
+    color: #2a4d8f;
+    transform: translateY(-1px);
+}
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+}
+
+
+/* // DELETE - USUÁRIOS \\ */
+.delete-usuario-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+}
+
+/* Informações do usuário */
+.usuario-info {
+    background-color: #f9fbff;
+    border: 1px solid #d0e3ff;
+}
+
+.usuario-info dt {
+    text-align: right;
+}
+
+.usuario-info dd {
+    color: #333;
+}
+
+/* Botões */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e6ebf7;
+    color: #2a4d8f;
+    transform: translateY(-1px);
+}
+
+.btn-danger {
+    background-color: #d9534f;
+    border-color: #d9534f;
+}
+
+.btn-danger:hover {
+    background-color: #b52a26;
+    transform: translateY(-1px);
+}
+
+
+/* // CREATE - USUÁRIOS \\ */
+.create-usuario-container {
+    font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Card */
+.card {
+    background-color: #ffffff;
+    border: 1px solid #d0e3ff;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
+    border-radius: 12px;
+}
+
+/* Labels */
+.form-label {
+    color: #3b4b6b;
+    font-weight: 500;
+}
+
+/* Inputs */
+.form-control {
+    border: 1px solid #bfcfe6;
+    border-radius: 8px;
+    padding: 10px;
+    transition: all 0.2s ease-in-out;
+}
+
+.form-control:focus {
+    border-color: #4a76e8;
+    box-shadow: 0 0 0 0.15rem rgba(74, 118, 232, 0.25);
+}
+
+/* Checkbox */
+.form-check-input:checked {
+    background-color: #4a76e8;
+    border-color: #4a76e8;
+}
+
+/* Botões */
+.btn {
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.25s ease-in-out;
+}
+
+.btn-outline-secondary:hover {
+    background-color: #e6ebf7;
+    color: #2a4d8f;
+    transform: translateY(-1px);
+}
+
+.btn-primary {
+    background-color: #4a76e8;
+    border-color: #4a76e8;
+}
+
+.btn-primary:hover {
+    background-color: #365fcb;
+    transform: translateY(-1px);
+}

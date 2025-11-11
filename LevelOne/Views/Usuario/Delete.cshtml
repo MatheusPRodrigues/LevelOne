@@ -4,47 +4,44 @@
     ViewData["Title"] = "Deletar Usuário";
 }
 
-<h1>Deletar Usuário</h1>
+<div class="delete-usuario-container mt-5">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 550px; border-radius: 14px;">
+        <h2 class="text-center text-danger fw-bold mb-4">
+            <i class="bi bi-trash3-fill me-2"></i>Deletar Usuário
+        </h2>
 
-<h3>Deseja deletar Esse Usuário?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cpf)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cpf)
-        </dd>
-        @* <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Senha)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Senha)
-        </dd> *@
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Ativo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Ativo)
-        </dd>
-    </dl>
-    
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
-        <a asp-action="Index">Back to List</a>
-    </form>
+        <p class="text-center text-muted mb-4">
+            Tem certeza de que deseja <strong class="text-danger">excluir</strong> este usuário?
+        </p>
+
+        <div class="usuario-info mb-4 p-3 rounded bg-light border">
+            <dl class="row mb-0">
+                <dt class="col-sm-4 fw-semibold text-secondary text-end">Nome:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Nome)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-secondary text-end">Email:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Email)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-secondary text-end">CPF:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Cpf)</dd>
+
+                <dt class="col-sm-4 fw-semibold text-secondary text-end">Ativo:</dt>
+                <dd class="col-sm-8">@Html.DisplayFor(model => model.Ativo)</dd>
+            </dl>
+        </div>
+
+        <form asp-action="Delete" method="post" class="mt-4">
+            <input type="hidden" asp-for="Id" />
+
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Cancelar
+                </a>
+
+                <button type="submit" class="btn btn-danger px-4">
+                    <i class="bi bi-trash-fill me-1"></i> Deletar
+                </button>
+            </div>
+        </form>
+    </div>
 </div>
