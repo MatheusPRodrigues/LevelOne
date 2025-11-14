@@ -1,0 +1,38 @@
+﻿@model LevelOne.Models.PermissaoModel
+
+@{
+    ViewData["Title"] = "Excluir Permissão";
+}
+
+<div class="permissao-delete-container mt-5">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 550px; border-radius: 14px;">
+        <h2 class="text-danger fw-bold text-center mb-3">
+            <i class="bi bi-trash3-fill me-2"></i>Excluir Permissão
+        </h2>
+
+        <p class="text-center text-muted mb-4">
+            Tem certeza de que deseja <strong>excluir</strong> a permissão abaixo? Esta ação não pode ser desfeita.
+        </p>
+
+        <div class="border rounded p-3 mb-4 bg-light">
+            <h5 class="text-primary mb-2">Nome da Permissão:</h5>
+            <p class="fs-5 fw-semibold">@Model.Nome</p>
+        </div>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="d-flex justify-content-between">
+                <a asp-action="Index" class="btn btn-secondary px-4 rounded-pill">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-danger px-4 rounded-pill">
+                    <i class="bi bi-trash3 me-1"></i> Excluir
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

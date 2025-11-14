@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,29 +6,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LevelOne.Data;
-using LevelOne.Helpers;
 using LevelOne.Models;
 using Microsoft.AspNetCore.Authorization;
 
 namespace LevelOne.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class AdminController : Controller
+    public class PermissoesController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AdminController(ApplicationDbContext context)
+        public PermissoesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Admin
+        // GET: Permissoes
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Usuarios.ToListAsync());
+            return View(await _context.Permissoes.ToListAsync());
         }
 
-        // GET: Admin/Details/5
+        // GET: Permissoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -36,40 +35,39 @@ namespace LevelOne.Controllers
                 return NotFound();
             }
 
-            var usuarioModel = await _context.Usuarios
+            var permissaoModel = await _context.Permissoes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuarioModel == null)
+            if (permissaoModel == null)
             {
                 return NotFound();
             }
 
-            return View(usuarioModel);
+            return View(permissaoModel);
         }
 
-        // GET: Admin/Create
+        // GET: Permissoes/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Create
+        // POST: Permissoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,email,Cpf,Senha,Ativo,Roles")] UsuarioModel usuarioModel)
+        public async Task<IActionResult> Create([Bind("Id,Nome")] PermissaoModel permissaoModel)
         {
             if (ModelState.IsValid)
             {
-                usuarioModel.Senha = SenhaHelper.GerarHashParaSenha(usuarioModel.Senha);
-                _context.Add(usuarioModel);
+                _context.Add(permissaoModel);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuarioModel);
+            return View(permissaoModel);
         }
 
-        // GET: Admin/Edit/5
+        // GET: Permissoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -77,22 +75,22 @@ namespace LevelOne.Controllers
                 return NotFound();
             }
 
-            var usuarioModel = await _context.Usuarios.FindAsync(id);
-            if (usuarioModel == null)
+            var permissaoModel = await _context.Permissoes.FindAsync(id);
+            if (permissaoModel == null)
             {
                 return NotFound();
             }
-            return View(usuarioModel);
+            return View(permissaoModel);
         }
 
-        // POST: Admin/Edit/5
+        // POST: Permissoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,email,Cpf,Senha,Ativo,Roles")] UsuarioModel usuarioModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome")] PermissaoModel permissaoModel)
         {
-            if (id != usuarioModel.Id)
+            if (id != permissaoModel.Id)
             {
                 return NotFound();
             }
@@ -101,12 +99,12 @@ namespace LevelOne.Controllers
             {
                 try
                 {
-                    _context.Update(usuarioModel);
+                    _context.Update(permissaoModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!UsuarioModelExists(usuarioModel.Id))
+                    if (!PermissaoModelExists(permissaoModel.Id))
                     {
                         return NotFound();
                     }
@@ -117,10 +115,10 @@ namespace LevelOne.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(usuarioModel);
+            return View(permissaoModel);
         }
 
-        // GET: Admin/Delete/5
+        // GET: Permissoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,34 +126,34 @@ namespace LevelOne.Controllers
                 return NotFound();
             }
 
-            var usuarioModel = await _context.Usuarios
+            var permissaoModel = await _context.Permissoes
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (usuarioModel == null)
+            if (permissaoModel == null)
             {
                 return NotFound();
             }
 
-            return View(usuarioModel);
+            return View(permissaoModel);
         }
 
-        // POST: Admin/Delete/5
+        // POST: Permissoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var usuarioModel = await _context.Usuarios.FindAsync(id);
-            if (usuarioModel != null)
+            var permissaoModel = await _context.Permissoes.FindAsync(id);
+            if (permissaoModel != null)
             {
-                _context.Usuarios.Remove(usuarioModel);
+                _context.Permissoes.Remove(permissaoModel);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool UsuarioModelExists(int id)
+        private bool PermissaoModelExists(int id)
         {
-            return _context.Usuarios.Any(e => e.Id == id);
+            return _context.Permissoes.Any(e => e.Id == id);
         }
     }
 }

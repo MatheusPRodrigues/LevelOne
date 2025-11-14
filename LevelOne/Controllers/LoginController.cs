@@ -32,18 +32,28 @@ namespace LevelOne.Controllers
             if (usuario == null || !SenhaHelper.VerificarSenha(senha, usuario.Senha))
             {
                 ViewBag.Erro = "CPF ou senha inválidos!";
-                return View();
+                return View("Index");
             }
+
+            var permissoes = await context.UsuariosPermissoes
+                .Where(ur => ur.UsuarioId == usuario.Id)
+                .Select(ur => ur.Permissao.Nome)
+                .ToListAsync();
 
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Name, usuario.Nome),
                 new Claim(ClaimTypes.NameIdentifier, usuario.Id.ToString()),
-                new Claim(ClaimTypes.Role, usuario.Roles)
             };
+
+            foreach (var permissao in permissoes)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, permissao));
+            }
 
             var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = new ClaimsPrincipal(identity);
+            
             var authProperties = new AuthenticationProperties
             {
                 IsPersistent = true,
@@ -53,12 +63,12 @@ namespace LevelOne.Controllers
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, authProperties);
 
-            if (usuario.Roles == "Admin")
-                return RedirectToAction("Index", "Admin");
-            else if (usuario.Roles == "Tecnico")
-                return RedirectToAction("Index", "Home");
-            else if (usuario.Roles == "Cliente")
-                return RedirectToAction("Index", "Home");
+            if (permissoes.Contains("Admin"))
+                return RedirectToAction("IndexAdmin", "Home");
+            else if (permissoes.Contains("Tecnico"))
+                return RedirectToAction("IndexTecnico", "Home");
+            else if (permissoes.Contains("Cliente"))
+                return RedirectToAction("IndexCliente", "Home");
             else
                 return RedirectToAction("Index", "Login");
         }
@@ -67,7 +77,7 @@ namespace LevelOne.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction("Login");
+            return RedirectToAction("Index");
         }
 
         [HttpGet]

@@ -1,0 +1,33 @@
+@{
+    ViewData["Title"] = "Área do Administrador";
+}
+
+<div class="area-admin">
+    <section class="admin-section d-flex align-items-center">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-md-5 text-center mt-4 mt-md-0">
+                    <img src="~/img/Admin.png" alt="Painel do Administrador" class="img-fluid rounded-4">
+                </div>
+
+                <div class="col-md-7 text-md-start text-center">
+                    <h2 class="fw-bold text-primary mb-3">Painel do Administrador</h2>
+                    <p class="lead text-muted">
+                        Gerencie usuários, defina permissões e mantenha o controle total do sistema em um só lugar.
+                    </p>
+
+                    <div class="d-flex flex-column align-items-md-start align-items-center mt-3 gap-2">
+                        <a asp-area="" asp-controller="Usuario" asp-action="Index"
+                           class="btn btn-primary px-4 py-2 rounded-pill w-auto">
+                            👥 Gerenciar Usuários
+                        </a>
+                        <a asp-area="" asp-controller="Permissoes" asp-action="Index"
+                           class="btn btn-secondary px-4 py-2 rounded-pill w-auto">
+                            🔐 Gerenciar Permissões (Roles)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

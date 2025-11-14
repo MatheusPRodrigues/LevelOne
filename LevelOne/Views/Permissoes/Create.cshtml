@@ -1,0 +1,40 @@
+﻿@model LevelOne.Models.PermissaoModel
+
+@{
+    ViewData["Title"] = "Cadastrar Permissão";
+}
+
+<div class="permissao-create-container mt-5">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 550px; border-radius: 14px;">
+        <h2 class="text-primary fw-bold text-center mb-3">
+            <i class="bi bi-shield-lock-fill me-2"></i>Cadastrar Permissão
+        </h2>
+
+        <p class="text-center text-muted mb-4">
+            Preencha o nome da permissão para cadastrar uma nova função no sistema.
+        </p>
+
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group mb-3">
+                <label asp-for="Nome" class="form-label fw-semibold text-secondary"></label>
+                <input asp-for="Nome" class="form-control border-primary-subtle shadow-sm" placeholder="Ex: Administrador, Técnico, Usuário..." />
+                <span asp-validation-for="Nome" class="text-danger small"></span>
+            </div>
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="Index" class="btn btn-secondary px-4 rounded-pill">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Voltar
+                </a>
+                <button type="submit" class="btn btn-primary px-4 rounded-pill">
+                    <i class="bi bi-save-fill me-1"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}

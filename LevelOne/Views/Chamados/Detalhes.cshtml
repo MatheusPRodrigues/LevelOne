@@ -1,0 +1,182 @@
+@model LevelOne.Models.ChamadoModel
+@using System.Security.Claims
+
+@{
+    ViewData["Title"] = "Detalhes do Chamado";
+    var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+    bool isTecnico = User.IsInRole("Tecnico");
+    bool isCliente = User.IsInRole("Cliente");
+
+    string voltarAction = isTecnico ? "ExibirChamadosTecnicos" : "ExibirChamadosClientes";
+    string voltarController = "Chamados";
+
+    bool possuiMensagemTecnico = Model.Mensagens.Any(m => m.UsuarioId == userId);
+}
+
+<link rel="stylesheet" href="~/css/DetalhesChamado.css" />
+
+<div class="container mt-4 chamado-detalhes-container">
+    <h2 class="mb-3 titulo-principal text-center">@ViewData["Title"]</h2>
+
+    <div class="card shadow-sm mb-4 chamado-card">
+        <div class="card-body">
+            <h4 class="mb-3 titulo-chamado">@Model.Titulo</h4>
+
+            <dl class="row">
+                <dt class="col-sm-3">Descrição:</dt>
+                <dd class="col-sm-9">@Model.Descricao</dd>
+
+                <dt class="col-sm-3">Data de Abertura:</dt>
+                <dd class="col-sm-9">@Model.DataAbertura.ToString("dd/MM/yyyy HH:mm")</dd>
+
+                <dt class="col-sm-3">Urgência:</dt>
+                <dd class="col-sm-9">@(Model.Urgencia ? "Sim" : "Não")</dd>
+
+                <dt class="col-sm-3">Status:</dt>
+                <dd class="col-sm-9">@Model.StatusChamado</dd>
+
+                <dt class="col-sm-3">Cliente:</dt>
+                <dd class="col-sm-9">@Model.Cliente?.Nome</dd>
+
+                <dt class="col-sm-3">Técnico:</dt>
+                <dd class="col-sm-9">
+                    @(Model.Tecnico != null ? Model.Tecnico.Nome : "Ainda não atribuído")
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <h4 class="titulo-mensagens mb-3 text-center">Mensagens</h4>
+
+    <div id="mensagens-container" class="mensagens-container">
+        @if (Model.Mensagens.Any())
+        {
+            @foreach (var msg in Model.Mensagens.OrderBy(m => m.DataMensagem))
+            {
+                var isClienteMsg = msg.TipoUsuario == "Cliente";
+                var msgClasse = isClienteMsg ? "mensagem-cliente" : "mensagem-tecnico";
+
+                <div class="mensagem @msgClasse">
+                    <div class="mensagem-info">
+                        <strong>@msg.TipoUsuario</strong>
+                        <small>@msg.DataMensagem.ToString("dd/MM/yyyy HH:mm")</small>
+                    </div>
+                    <div class="mensagem-texto">@msg.Texto</div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-muted text-center" id="sem-mensagens">Nenhuma mensagem neste chamado ainda.</p>
+        }
+    </div>
+
+    @if (Model.StatusChamado == LevelOne.Enums.StatusEnum.Finalizado)
+    {
+        <div class="alert alert-warning mt-3 text-center">
+            Este chamado foi finalizado. Não é possível enviar novas mensagens.
+        </div>
+    }
+    else
+    {
+        @if ((isCliente && Model.IdCliente == userId) || (isTecnico && Model.IdTecnico == userId))
+        {
+            <form id="mensagemForm" class="mt-4">
+                <input type="hidden" name="chamadoId" value="@Model.Id" />
+
+                <div class="form-group">
+                    <label for="texto" class="label-enviar">Enviar nova mensagem:</label>
+                    <textarea name="texto" id="texto" class="form-control" rows="3" placeholder="Digite sua mensagem..."></textarea>
+                </div>
+
+                <div class="d-flex justify-content-between mt-3 align-items-center">
+                    <a asp-action="@voltarAction" asp-controller="@voltarController" class="btn btn-voltar">← Voltar</a>
+                    <button type="submit" class="btn btn-enviar">Enviar</button>
+                </div>
+            </form>
+
+            @if (isTecnico && Model.IdTecnico == userId)
+            {
+                <div class="mt-4 text-end">
+                    @if (possuiMensagemTecnico)
+                    {
+                        <form asp-action="FinalizarChamado" asp-route-id="@Model.Id" method="post">
+                            <button type="submit" class="btn btn-danger">Finalizar Chamado</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <button type="button" class="btn btn-danger" disabled title="Envie ao menos uma mensagem antes de finalizar.">
+                            Finalizar Chamado
+                        </button>
+                    }
+                </div>
+            }
+        }
+        else if (isTecnico && Model.IdTecnico == null)
+        {
+            <p class="text-muted mt-3">Você precisa assumir este chamado antes de poder enviar mensagens.</p>
+        }
+    }
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const form = document.getElementById("mensagemForm");
+            const mensagensContainer = document.getElementById("mensagens-container");
+            const textoInput = document.getElementById("texto");
+            const btnEnviar = form?.querySelector(".btn-enviar");
+
+            if (btnEnviar && form) {
+                btnEnviar.addEventListener("click", async function (e) {
+                    e.preventDefault(); 
+
+                    const texto = textoInput.value.trim();
+                    const chamadoId = form.querySelector("[name='chamadoId']").value;
+
+                    if (!texto) {
+                        alert("Digite uma mensagem antes de enviar.");
+                        return;
+                    }
+
+                    try {
+                        const response = await fetch("@Url.Action("EnviarMensagem", "Chamados")", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').val()
+                            },
+                            body: JSON.stringify({ chamadoId, texto })
+                        });
+
+                        if (!response.ok) throw new Error("Erro ao enviar mensagem");
+
+                        const data = await response.json();
+
+                        const vazio = document.getElementById("sem-mensagens");
+                        if (vazio) vazio.remove();
+
+                        const msgDiv = document.createElement("div");
+                        msgDiv.classList.add("mensagem", data.tipoUsuario === "Cliente" ? "mensagem-cliente" : "mensagem-tecnico");
+                        msgDiv.innerHTML = `
+                            <div class="mensagem-info">
+                                <strong>${data.tipoUsuario}</strong>
+                                <small>${data.dataMensagem}</small>
+                            </div>
+                            <div class="mensagem-texto">${data.texto}</div>`;
+
+                        mensagensContainer.appendChild(msgDiv);
+
+                        textoInput.value = "";
+                        mensagensContainer.scrollTop = mensagensContainer.scrollHeight;
+
+                    } catch (err) {
+                        console.error(err);
+                        alert("Erro ao enviar mensagem. Tente novamente.");
+                    }
+                });
+            }
+        });
+    </script>
+}

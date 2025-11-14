@@ -1,0 +1,153 @@
+@{
+    ViewData["Title"] = "Relatório de Chamados";
+}
+
+<div class="relatorio-container">
+    <h2 class="titulo-relatorio text-center mb-4 text-primary fw-bold">Relatório de Chamados</h2>
+
+    <div class="graficos-container d-flex flex-wrap justify-content-center gap-4">
+        <div class="card grafico-card shadow-sm p-4">
+            <h5 class="text-center text-secondary mb-3">Status dos Chamados</h5>
+            <canvas id="graficoColunas"></canvas>
+        </div>
+
+        <div class="card grafico-card shadow-sm p-4">
+            <h5 class="text-center text-secondary mb-3">Chamados do Técnico Atual</h5>
+            <canvas id="graficoPizza"></canvas>
+        </div>
+    </div>
+
+    <div class="card resumo-card shadow-sm p-4 mt-5">
+        <h4 class="text-center mb-3 text-secondary">Resumo</h4>
+        <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Chamados Abertos:</span>
+                <strong>@Model.TotalAbertos</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Chamados em Andamento:</span>
+                <strong>@Model.TotalAndamento</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Chamados Finalizados:</span>
+                <strong>@Model.TotalFinalizados</strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between bg-light fw-bold">
+                <span>Total Atendidos pelo Técnico:</span>
+                <strong>@Model.TotalAtendidosPeloTecnico</strong>
+            </li>
+        </ul>
+    </div>
+
+    <div class="botoes-relatorio d-flex flex-wrap justify-content-center align-items-center gap-3 mt-4">
+        <a asp-controller="Relatorios" asp-action="RelatorioChamadoEmPdf" class="btn btn-danger px-4">
+            <i class="bi bi-file-earmark-pdf"></i> Gerar PDF
+        </a>
+        <a asp-controller="Relatorios" asp-action="RelatorioChamadoEmXls" class="btn btn-success px-4">
+            <i class="bi bi-file-earmark-spreadsheet"></i> Gerar XLS
+        </a>
+        <a asp-controller="Home" asp-action="IndexTecnico" class="btn btn-outline-primary px-4">
+            <i class="bi bi-arrow-left-circle"></i> Voltar
+        </a>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const ctxColunas = document.getElementById('graficoColunas').getContext('2d');
+        new Chart(ctxColunas, {
+            type: 'bar',
+            data: {
+                labels: ['Abertos', 'Em Andamento', 'Finalizados'],
+                datasets: [{
+                    label: 'Chamados',
+                    data: [@Model.TotalAbertos, @Model.TotalAndamento, @Model.TotalFinalizados],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.8)',
+                        'rgba(255, 159, 64, 0.8)',
+                        'rgba(75, 192, 192, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 159, 64, 1)',
+                        'rgba(75, 192, 192, 1)'
+                    ],
+                    borderWidth: 1.2,
+                    borderRadius: 8,
+                    barThickness: 45
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#fff',
+                        titleColor: '#000',
+                        bodyColor: '#000',
+                        borderColor: '#ccc',
+                        borderWidth: 1,
+                        padding: 10,
+                        displayColors: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: { display: false },
+                        ticks: { color: '#444', font: { size: 14, weight: 'bold' } }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        grid: { color: 'rgba(200,200,200,0.2)' },
+                        ticks: { color: '#555', stepSize: 1, font: { size: 13 } }
+                    }
+                },
+                animation: { duration: 900, easing: 'easeOutBounce' }
+            }
+        });
+
+        const totalChamados = @Model.TotalAbertos + @Model.TotalAndamento + @Model.TotalFinalizados;
+        const chamadosDoTecnico = @Model.TotalAtendidosPeloTecnico;
+        const outrosChamados = totalChamados - chamadosDoTecnico;
+
+        const ctxPizza = document.getElementById('graficoPizza').getContext('2d');
+        new Chart(ctxPizza, {
+            type: 'pie',
+            data: {
+                labels: ['Chamados do Técnico', 'Outros Chamados'],
+                datasets: [{
+                    data: [chamadosDoTecnico, outrosChamados],
+                    backgroundColor: [
+                        'rgba(54, 162, 235, 0.8)',
+                        'rgba(201, 203, 207, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(201, 203, 207, 1)'
+                    ],
+                    borderWidth: 1.5
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { font: { size: 13 }, color: '#333' }
+                    },
+                    tooltip: {
+                        backgroundColor: '#fff',
+                        titleColor: '#000',
+                        bodyColor: '#000',
+                        borderColor: '#ccc',
+                        borderWidth: 1,
+                        padding: 10
+                    }
+                },
+                animation: { duration: 900, easing: 'easeOutQuart' }
+            }
+        });
+    </script>
+}

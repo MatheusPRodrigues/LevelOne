@@ -1,4 +1,5 @@
 using LevelOne.Data;
+using LevelOne.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,11 +17,27 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/Login";
+        options.LoginPath = "/Login";                 
         options.AccessDeniedPath = "/Login/AcessoNegado";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-        options.SlidingExpiration = true;
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(1);
+        options.SlidingExpiration = true;            
+        options.Cookie.HttpOnly = true;
+        options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
+        options.Cookie.SameSite = SameSiteMode.Strict;
+
+        options.Events = new CookieAuthenticationEvents
+        {
+            OnRedirectToLogin = ctx =>
+            {
+                ctx.Response.Redirect(ctx.RedirectUri);
+                return Task.CompletedTask;
+            }
+        };
     });
+
+builder.Services.AddScoped<DialogFlowService>();
+builder.Services.AddScoped<RelatorioPdfService>();
+builder.Services.AddScoped<RelatorioXlsService>();
 
 var app = builder.Build();
 

@@ -1,4 +1,4 @@
-@model LevelOne.Models.UsuarioModel
+﻿@model LevelOne.Models.UsuarioModel
 
 @{
     ViewData["Title"] = "Create";
@@ -36,11 +36,6 @@
                 <label class="form-check-label">
                     <input class="form-check-input" asp-for="Ativo" /> @Html.DisplayNameFor(model => model.Ativo)
                 </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="Roles" class="control-label"></label>
-                <input asp-for="Roles" class="form-control" />
-                <span asp-validation-for="Roles" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

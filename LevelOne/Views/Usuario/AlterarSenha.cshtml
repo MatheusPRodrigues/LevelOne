@@ -1,0 +1,45 @@
+﻿@{
+    ViewData["Title"] = "Alterar Senha";
+}
+
+<div class="alterar-senha-container mt-5">
+    <div class="card shadow-sm p-4 mx-auto" style="max-width: 500px; border-radius: 14px;">
+        <h2 class="text-center text-primary fw-bold mb-4">
+            <i class="bi bi-key-fill me-2"></i>Alterar Senha
+        </h2>
+        <p class="text-center text-muted mb-4">Usuário: <strong>@ViewBag.UsuarioNome</strong></p>
+
+        <form asp-action="AlterarSenha" method="post" class="needs-validation">
+            <div class="mb-3">
+                <label for="novaSenha" class="form-label fw-semibold text-secondary">Nova Senha</label>
+                <input type="password" name="novaSenha" id="novaSenha" class="form-control campo-azul"
+                       placeholder="Digite a nova senha" required minlength="8" />
+            </div>
+
+            <div class="mb-3">
+                <label for="confirmarSenha" class="form-label fw-semibold text-secondary">Confirmar Nova Senha</label>
+                <input type="password" name="confirmarSenha" id="confirmarSenha" class="form-control campo-azul"
+                       placeholder="Confirme a nova senha" required minlength="8" />
+            </div>
+
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="text-danger mt-2 small">
+                    @foreach (var erro in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@erro.ErrorMessage</p>
+                    }
+                </div>
+            }
+
+            <div class="d-flex justify-content-between mt-4">
+                <a asp-action="Index" class="btn btn-outline-secondary px-4">
+                    <i class="bi bi-arrow-left-circle me-1"></i> Cancelar
+                </a>
+                <button type="submit" class="btn btn-primary px-4">
+                    <i class="bi bi-save-fill me-1"></i> Salvar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
