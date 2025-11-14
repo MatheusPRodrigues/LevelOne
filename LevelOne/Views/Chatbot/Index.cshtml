@@ -22,7 +22,6 @@
 
         const chat = document.getElementById("chat");
 
-        // Mensagem do usuário (lado direito)
         chat.innerHTML += `
             <div class="msg-user">
                 <div class="msg-user-content">
@@ -34,7 +33,6 @@
         `;
         document.getElementById("mensagem").value = "";
 
-        // Indicador de "digitando"
         const loading = document.createElement("div");
         loading.classList.add("typing-indicator");
         loading.innerHTML = `
@@ -44,7 +42,6 @@
         chat.appendChild(loading);
         chat.scrollTop = chat.scrollHeight;
 
-        // Aguarda resposta do backend
         const response = await fetch("/Chatbot/EnviarMensagem", {
             method: "POST",
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -53,10 +50,8 @@
 
         const data = await response.json();
 
-        // Remove animação de carregamento
         loading.remove();
 
-        // Mensagem do bot
         chat.innerHTML += `
             <div class="msg-bot">
                 <i class="bi bi-robot msg-bot-icon"></i>
@@ -70,7 +65,6 @@
         chat.scrollTop = chat.scrollHeight;
         interacoes++;
 
-        // Após 3 tentativas
         if (interacoes >= 3) {
             chat.innerHTML += `
                 <div class="msg-bot">

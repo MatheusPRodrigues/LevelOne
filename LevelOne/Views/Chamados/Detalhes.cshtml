@@ -10,7 +10,6 @@
     string voltarAction = isTecnico ? "ExibirChamadosTecnicos" : "ExibirChamadosClientes";
     string voltarController = "Chamados";
 
-    // Verifica se o chamado possui pelo menos uma mensagem do técnico
     bool possuiMensagemTecnico = Model.Mensagens.Any(m => m.UsuarioId == userId);
 }
 
@@ -72,7 +71,6 @@
         }
     </div>
 
-    @* 🔒 Caso o chamado esteja finalizado *@
     @if (Model.StatusChamado == LevelOne.Enums.StatusEnum.Finalizado)
     {
         <div class="alert alert-warning mt-3 text-center">
@@ -81,7 +79,6 @@
     }
     else
     {
-        @* 📬 Formulário de envio de mensagens *@
         @if ((isCliente && Model.IdCliente == userId) || (isTecnico && Model.IdTecnico == userId))
         {
             <form id="mensagemForm" class="mt-4">
@@ -98,7 +95,6 @@
                 </div>
             </form>
 
-            @* 🔧 Botão de Finalizar — fora do form principal *@
             @if (isTecnico && Model.IdTecnico == userId)
             {
                 <div class="mt-4 text-end">
@@ -134,7 +130,7 @@
 
             if (btnEnviar && form) {
                 btnEnviar.addEventListener("click", async function (e) {
-                    e.preventDefault(); // 🔹 Impede o submit padrão (apenas botão Enviar)
+                    e.preventDefault(); 
 
                     const texto = textoInput.value.trim();
                     const chamadoId = form.querySelector("[name='chamadoId']").value;
@@ -158,11 +154,9 @@
 
                         const data = await response.json();
 
-                        // Remove aviso de "sem mensagens"
                         const vazio = document.getElementById("sem-mensagens");
                         if (vazio) vazio.remove();
 
-                        // Cria nova mensagem dinamicamente
                         const msgDiv = document.createElement("div");
                         msgDiv.classList.add("mensagem", data.tipoUsuario === "Cliente" ? "mensagem-cliente" : "mensagem-tecnico");
                         msgDiv.innerHTML = `

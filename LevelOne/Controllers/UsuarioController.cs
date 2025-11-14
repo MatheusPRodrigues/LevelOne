@@ -154,7 +154,6 @@ namespace LevelOne.Controllers
                     usuario.Email = usuarioModel.Email;
                     usuario.Ativo = usuarioModel.Ativo;
 
-                    // Atualiza permissões
                     _context.UsuariosPermissoes.RemoveRange(usuario.UsuarioPermissoes);
                     foreach (var permissao in permissoes)
                     {
@@ -165,9 +164,6 @@ namespace LevelOne.Controllers
                         ));
                     }
 
-                    //_context.Entry(usuario).State = EntityState.Modified;
-
-                    //_context.Update(usuarioModel);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)

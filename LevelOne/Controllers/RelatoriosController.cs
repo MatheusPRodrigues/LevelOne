@@ -26,7 +26,6 @@ public class RelatoriosController : Controller
 
     public IActionResult Index()
     {
-        // Exemplo: ID do técnico logado (ideal pegar via autenticação)
         var tecnicoLogadoId = Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
 
         var chamados = _context.Chamados

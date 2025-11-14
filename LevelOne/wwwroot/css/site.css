@@ -31,7 +31,6 @@ body {
 
 /*FORM DE LOGIN*/
 
-/* Card estilizado */
 .login-card {
     background-color: #f0f6ff;
     border-radius: 12px;
@@ -39,7 +38,6 @@ body {
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
 }
 
-/* Divisor */
 .divider {
     border: none;
     border-top: 2px solid #2f3e5f;
@@ -47,14 +45,12 @@ body {
     opacity: 0.3;
 }
 
-/* Título e labels */
 .login-card h3,
 .login-card .form-label {
     color: #2f3e5f;
     font-weight: 600;
 }
 
-/* Campos */
 .form-control {
     border-radius: 8px;
     border: 1px solid #cdd9f1;
@@ -68,7 +64,6 @@ body {
     box-shadow: 0 0 5px rgba(91, 142, 247, 0.4);
 }
 
-/* Ícone de olho */
 .position-relative {
     position: relative;
 }
@@ -88,7 +83,6 @@ body {
     opacity: 1;
 }
 
-/* Botão */
 .btn-login {
     background-color: #2e5db8;
     color: white;
@@ -103,7 +97,6 @@ body {
     transform: scale(1.02);
 }
 
-/* Alerta */
 .alert {
     border-radius: 8px;
 }
@@ -111,7 +104,6 @@ body {
 
 /* ESTILIZAÇÃO CHATBOT */
 
-/* Estilo geral do chat */
 .chat-box {
     border: 1px solid #cbd5e1;
     border-radius: 12px;
@@ -122,7 +114,6 @@ body {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
-/* Mensagens do bot */
 .msg-bot {
     display: flex;
     align-items: flex-start;
@@ -146,7 +137,6 @@ body {
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-/* Mensagens do usuário */
 .msg-user {
     display: flex;
     justify-content: flex-end;
@@ -178,7 +168,6 @@ body {
     margin-left: 10px;
 }
 
-/* Nome acima da mensagem */
 .msg-name {
     font-size: 0.8rem;
     font-weight: 600;
@@ -186,7 +175,6 @@ body {
     color: #4b5563;
 }
 
-/* Animação de carregamento */
 .typing-indicator {
     display: flex;
     align-items: center;
@@ -227,7 +215,6 @@ body {
     40% { opacity: 1; }
 }
 
-/* Scroll custom */
 .chat-box::-webkit-scrollbar {
     width: 6px;
 }
@@ -239,15 +226,12 @@ body {
 
 /* AREA DO CLIENTE */
 
-/* Layout inspirado no Starbucks */
-/* Layout geral */
 .area-cliente {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #ffffff;
     color: #333;
 }
 
-/* Seções */
 .cliente-section {
     min-height: 70vh;
     padding: 3rem 0;
@@ -262,7 +246,6 @@ body {
     box-shadow: 0 10px 24px rgba(0, 0, 80, 0.12);
 }
 
-/* Títulos e textos */
 h2 {
     font-size: 2rem;
     color: #2e5db8;
@@ -273,7 +256,6 @@ p.lead {
     color: #5c6b7a;
 }
 
-/* Botões */
 .btn-primary {
     background-color: #2e5db8;
     border: none;
@@ -285,13 +267,12 @@ p.lead {
 }
 
 
-/* // FORM DE CRIAÇÃO DE CHAMADO \\ */
 .chamado-container {
     max-width: 600px;
 }
 
 .chamado-card {
-    background-color: #f0f6ff; /* azul bem claro */
+    background-color: #f0f6ff; 
     border: 1px solid #d0e3ff;
     border-radius: 12px;
     padding: 2rem;
@@ -330,7 +311,6 @@ p.lead {
     color: #2a4d8f;
 }
 
-/* Botões */
 .btn-enviar {
     background-color: #2a4d8f;
     border: none;
@@ -358,7 +338,6 @@ p.lead {
 }
 
 
-/* // EXIBIÇÃO DE CHAMADOS DO CLIENTE E TÉCNICO\\ */
 .chamados-container {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     max-width: 1200px;
@@ -366,7 +345,6 @@ p.lead {
     padding: 0 20px;
 }
 
-/* Wrapper da tabela */
 .chamado-tabela-wrapper {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -376,7 +354,6 @@ p.lead {
     width: 100%;
 }
 
-/* Tabela */
 .chamado-tabela {
     width: 100%;
     border-collapse: separate;
@@ -384,7 +361,6 @@ p.lead {
     table-layout: fixed;
 }
 
-/* Cabeçalho */
 .chamado-tabela thead {
     background-color: #2a4d8f;
     color: #ffffff;
@@ -398,7 +374,6 @@ p.lead {
     border-bottom: 3px solid #d0e3ff;
 }
 
-/* Corpo da tabela */
 .chamado-tabela td {
     background-color: #f7faff;
     padding: 14px 10px;
@@ -412,40 +387,34 @@ p.lead {
     white-space: nowrap;
 }
 
-/* Primeira coluna arredondada à esquerda */
 .chamado-tabela td:first-child {
     border-left: 1px solid #e0ebff;
     border-top-left-radius: 8px;
     border-bottom-left-radius: 8px;
 }
 
-/* Última coluna arredondada à direita */
 .chamado-tabela td:last-child {
     border-top-right-radius: 8px;
     border-bottom-right-radius: 8px;
 }
 
-/* Colunas com delimitação específica */
 .chamado-tabela td.titulo {
-    max-width: 220px; /* limite para título */
+    max-width: 220px; 
 }
 
 .chamado-tabela td.descricao {
-    max-width: 280px; /* limite para descrição */
+    max-width: 280px; 
 }
 
-/* Linhas alternadas */
 .chamado-tabela tbody tr:nth-child(even) td {
     background-color: #eef4ff;
 }
 
-/* Hover */
 .chamado-tabela tbody tr:hover td {
     background-color: #e1edff;
     transition: background-color 0.25s ease-in-out;
 }
 
-/* Botão */
 .btn-detalhes {
     background-color: #2a4d8f;
     border: none;
@@ -463,7 +432,6 @@ p.lead {
     transform: translateY(-1px);
 }
 
-/* Responsividade */
 @media (max-width: 768px) {
     .chamado-tabela th,
     .chamado-tabela td {
@@ -493,7 +461,6 @@ p.lead {
     border-radius: 12px;
 }
 
-/* Cabeçalho */
 .titulo-principal {
     color: #004aad;
     font-weight: 600;
@@ -510,7 +477,6 @@ p.lead {
     font-weight: 600;
 }
 
-/* Botões */
 .btn-voltar {
     background-color: #005bba;
     color: white;
@@ -529,7 +495,6 @@ p.lead {
     opacity: 0.9;
 }
 
-/* Mensagens */
 .mensagens-container {
     background-color: #f1f6ff;
     border: 1px solid #cfd9f0;
@@ -540,7 +505,7 @@ p.lead {
 }
 
 .mensagem {
-    max-width: 45%; /* ainda mais estreito */
+    max-width: 45%; 
     padding: 10px 14px;
     border-radius: 15px;
     margin-bottom: 10px;
@@ -554,7 +519,7 @@ p.lead {
 }
 
 .mensagem-cliente .mensagem-info small {
-    color: #eaf1ff; /* texto mais legível */
+    color: #eaf1ff; 
 }
 
 .mensagem-tecnico {
@@ -585,13 +550,13 @@ p.lead {
     background-color: #f7faff;
     border: 1px solid #2a4d8f;
     border-radius: 8px;
-    padding: 8px 36px 8px 12px; /* mais espaço à direita para a seta */
+    padding: 8px 36px 8px 12px; 
     font-weight: 500;
     color: #2a4d8f;
-    appearance: none; /* remove o estilo padrão do sistema */
+    appearance: none; 
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' fill='%232a4d8f' viewBox='0 0 24 24'><path d='M7 10l5 5 5-5z'/></svg>");
     background-repeat: no-repeat;
-    background-position: right 10px center; /* seta bem posicionada */
+    background-position: right 10px center; 
     background-size: 18px;
     cursor: pointer;
     transition: background-color 0.25s ease-in-out;
@@ -608,20 +573,19 @@ p.lead {
 
 
 /* // ÁREA DO TÉCNICO \\ */
-/* Layout geral */
+
 .area-tecnico {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #ffffff;
     color: #333;
 }
 
-/* Seções */
 .tecnico-section {
     min-height: 70vh;
     padding: 3rem 0;
     border-radius: 20px;
     margin-bottom: 3rem;
-    background-color: #f0f6ff; /* azul bem claro */
+    background-color: #f0f6ff; 
     box-shadow: 0 8px 20px rgba(0, 0, 80, 0.08);
     transition: all 0.3s ease;
 }
@@ -630,7 +594,6 @@ p.lead {
     box-shadow: 0 10px 24px rgba(0, 0, 80, 0.12);
 }
 
-/* Títulos e textos */
 .tecnico-section h2 {
     font-size: 2rem;
     color: #2e5db8;
@@ -641,7 +604,6 @@ p.lead {
     color: #5c6b7a;
 }
 
-/* Botões */
 .btn-primary {
     background-color: #2e5db8;
     border: none;
@@ -665,7 +627,7 @@ p.lead {
 
 
 /* // PÁGINAS DE RELATÓRIOS \\ */
-/* Container principal */
+
 .relatorio-container {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
     background-color: #f8faff;
@@ -675,13 +637,11 @@ p.lead {
     margin: 2rem auto;
 }
 
-/* Título principal */
 .titulo-relatorio {
     font-size: 2rem;
     color: #2e5db8;
 }
 
-/* Cartões dos gráficos */
 .grafico-card {
     width: 420px;
     border-radius: 16px;
@@ -699,7 +659,6 @@ p.lead {
     min-height: 320px;
 }
 
-/* Card de resumo */
 .resumo-card {
     max-width: 600px;
     margin: 0 auto;
@@ -708,7 +667,6 @@ p.lead {
     border: 1px solid #e5ecf5;
 }
 
-/* Lista de resumo */
 .resumo-card .list-group-item {
     border: none;
     font-size: 1rem;
@@ -718,7 +676,6 @@ p.lead {
     color: #2e5db8;
 }
 
-/* Botões */
 .botoes-relatorio .btn {
     font-weight: 500;
     border-radius: 30px;
@@ -749,7 +706,6 @@ p.lead {
     padding: 0 20px;
 }
 
-/* Wrapper da tabela */
 .usuario-tabela-wrapper {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -758,7 +714,6 @@ p.lead {
     overflow-x: auto;
 }
 
-/* Tabela */
 .usuario-tabela {
     width: 100%;
     border-collapse: separate;
@@ -767,7 +722,6 @@ p.lead {
     text-align: center;
 }
 
-/* Cabeçalho */
 .usuario-tabela thead {
     background-color: #2a4d8f;
     color: #ffffff;
@@ -781,7 +735,6 @@ p.lead {
     text-align: center;
 }
 
-/* Corpo da tabela */
 .usuario-tabela td {
     background-color: #f7faff;
     padding: 12px 10px;
@@ -795,18 +748,15 @@ p.lead {
     text-align: center;
 }
 
-/* Linhas alternadas */
 .usuario-tabela tbody tr:nth-child(even) td {
     background-color: #eef4ff;
 }
 
-/* Hover */
 .usuario-tabela tbody tr:hover td {
     background-color: #e1edff;
     transition: background-color 0.25s ease-in-out;
 }
 
-/* Botões */
 .btn {
     border-radius: 6px;
     transition: all 0.25s ease-in-out;
@@ -816,7 +766,6 @@ p.lead {
     transform: translateY(-1px);
 }
 
-/* Toast */
 .toast-body {
     font-weight: 500;
     font-size: 0.95rem;
@@ -828,7 +777,6 @@ p.lead {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Campos de entrada */
 .campo-azul {
     border: 1px solid #bcd0f7;
     border-radius: 8px;
@@ -842,13 +790,11 @@ p.lead {
     background-color: #ffffff;
 }
 
-/* Caixa das permissões */
 .permissoes-box {
     background-color: #f5f8ff;
     border: 1px solid #d0e3ff;
 }
 
-/* Botões */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -871,7 +817,6 @@ p.lead {
     transform: translateY(-1px);
 }
 
-/* Card */
 .card {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -884,7 +829,6 @@ p.lead {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Campos */
 .campo-azul {
     border: 1px solid #bcd0f7;
     border-radius: 8px;
@@ -898,7 +842,6 @@ p.lead {
     background-color: #ffffff;
 }
 
-/* Botões */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -921,7 +864,6 @@ p.lead {
     transform: translateY(-1px);
 }
 
-/* Card */
 .card {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -934,7 +876,6 @@ p.lead {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Card */
 .card {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -942,7 +883,6 @@ p.lead {
     border-radius: 12px;
 }
 
-/* Informações do usuário */
 .usuario-info {
     background-color: #f9fbff;
     border: 1px solid #d0e3ff;
@@ -956,7 +896,6 @@ p.lead {
     color: #333;
 }
 
-/* Botões */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -985,7 +924,6 @@ p.lead {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Card */
 .card {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -993,13 +931,11 @@ p.lead {
     border-radius: 12px;
 }
 
-/* Labels */
 .form-label {
     color: #3b4b6b;
     font-weight: 500;
 }
 
-/* Inputs */
 .form-control {
     border: 1px solid #bfcfe6;
     border-radius: 8px;
@@ -1012,13 +948,11 @@ p.lead {
     box-shadow: 0 0 0 0.15rem rgba(74, 118, 232, 0.25);
 }
 
-/* Checkbox */
 .form-check-input:checked {
     background-color: #4a76e8;
     border-color: #4a76e8;
 }
 
-/* Botões */
 .btn {
     border-radius: 8px;
     font-weight: 500;
@@ -1054,12 +988,10 @@ p.lead {
     box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.05);
 }
 
-/* Título */
 .text-primary {
     color: #2b4db8 !important;
 }
 
-/* Botão principal */
 .btn-primary {
     background-color: #2b4db8;
     border-color: #2b4db8;
@@ -1072,7 +1004,6 @@ p.lead {
     transform: translateY(-1px);
 }
 
-/* Tabela */
 .table {
     border-collapse: separate;
     border-spacing: 0;
@@ -1094,7 +1025,6 @@ p.lead {
     padding: 12px;
 }
 
-/* Botões de ação */
 .btn-warning {
     background-color: #f0ad4e;
     border-color: #f0ad4e;
@@ -1121,7 +1051,6 @@ p.lead {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Card */
 .card {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -1134,12 +1063,10 @@ p.lead {
     transform: translateY(-3px);
 }
 
-/* Títulos */
 .text-primary {
     color: #2b4db8 !important;
 }
 
-/* Labels e inputs */
 .form-label {
     color: #2b4db8;
 }
@@ -1155,7 +1082,6 @@ p.lead {
     box-shadow: 0 0 6px rgba(43, 77, 184, 0.4);
 }
 
-/* Botões */
 .btn-primary {
     background-color: #2b4db8;
     border: none;
@@ -1183,7 +1109,6 @@ p.lead {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Card */
 .card {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -1196,7 +1121,6 @@ p.lead {
     transform: translateY(-3px);
 }
 
-/* Textos */
 .text-primary {
     color: #2b4db8 !important;
 }
@@ -1205,12 +1129,10 @@ p.lead {
     color: #dc3545 !important;
 }
 
-/* Área da permissão */
 .bg-light {
     background-color: #f8f9fa !important;
 }
 
-/* Botões */
 .btn-danger {
     background-color: #c82333;
     border: none;
@@ -1238,7 +1160,6 @@ p.lead {
     font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
 
-/* Card */
 .card {
     background-color: #ffffff;
     border: 1px solid #d0e3ff;
@@ -1251,7 +1172,6 @@ p.lead {
     transform: translateY(-3px);
 }
 
-/* Textos */
 .text-primary {
     color: #1b3d99 !important;
 }
@@ -1264,7 +1184,6 @@ p.lead {
     color: #6c757d !important;
 }
 
-/* Input */
 .form-control {
     border-radius: 10px;
     padding: 10px 12px;
@@ -1277,7 +1196,6 @@ p.lead {
     box-shadow: 0 0 0 0.2rem rgba(30, 80, 180, 0.15);
 }
 
-/* Botões */
 .btn-primary {
     background-color: #1b3d99;
     border: none;
@@ -1307,13 +1225,12 @@ p.lead {
     color: #333;
 }
 
-/* ===== Seção ===== */
 .admin-section {
     min-height: 70vh;
     padding: 3rem 0;
     border-radius: 20px;
     margin-bottom: 3rem;
-    background-color: #f0f6ff; /* Azul bem claro */
+    background-color: #f0f6ff; 
     box-shadow: 0 8px 20px rgba(0, 0, 80, 0.08);
     transition: all 0.3s ease;
 }
@@ -1322,7 +1239,6 @@ p.lead {
     box-shadow: 0 10px 24px rgba(0, 0, 80, 0.12);
 }
 
-/* ===== Títulos e textos ===== */
 h2 {
     font-size: 2rem;
     color: #2e5db8;
@@ -1333,7 +1249,6 @@ p.lead {
     color: #5c6b7a;
 }
 
-/* ===== Botões ===== */
 .btn-primary {
     background-color: #2e5db8;
     border: none;
@@ -1354,7 +1269,6 @@ p.lead {
     background-color: #4666ca;
 }
 
-/* ===== Imagens ===== */
 img {
     transition: transform 0.3s ease;
 }
@@ -1363,7 +1277,6 @@ img:hover {
     transform: scale(1.05);
 }
 
-/* ===== Responsividade ===== */
 @media (max-width: 768px) {
     h2 {
         font-size: 1.6rem;

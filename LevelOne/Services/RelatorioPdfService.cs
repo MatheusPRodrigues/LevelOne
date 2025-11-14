@@ -13,13 +13,11 @@ namespace LevelOne.Services
     {
         public RelatorioPdfService()
         {
-            // garante que a licença community está setada (pode duplicar com Program.cs sem problema)
             QuestPDF.Settings.License = LicenseType.Community;
         }
 
         public byte[] GerarRelatorioEmPdf(List<ChamadoModel> chamados)
         {
-            // prepara listas por status (ajuste os nomes conforme seu enum real)
             var totalChamados = chamados.Count;
             var abertos = chamados.Where(c => c.StatusChamado == StatusEnum.Aberto).ToList();
             var andamento = chamados.Where(c => c.StatusChamado == StatusEnum.EmAtendimento).ToList();
@@ -35,23 +33,18 @@ namespace LevelOne.Services
                     page.Margin(30);
                     page.DefaultTextStyle(x => x.FontSize(11));
 
-                    // Cabeçalho
                     page.Header().Column(col =>
                     {
                         col.Item().Text("RELATÓRIO DE CHAMADOS").FontSize(18).Bold().AlignCenter();
                         col.Item().Text($"Gerado em: {dataGeracao}").FontSize(9).FontColor(Colors.Grey.Darken1).AlignCenter();
                     });
 
-                    // Conteúdo
                     page.Content().PaddingTop(10).Column(content =>
                     {
-                        // resumo
                         content.Item().Element(c => CriarResumo(c, totalChamados, abertos.Count, andamento.Count, finalizados.Count));
 
-                        // sumário simples (sem links por enquanto)
                         content.Item().PaddingTop(8).Element(CriarSumarioSimples());
 
-                        // seções com tabelas
                         if (abertos.Any())
                             content.Item().PaddingTop(10).Element(c => CriarSecao(c, "Chamados Abertos", abertos, Colors.Red.Medium));
                         if (andamento.Any())
@@ -60,7 +53,6 @@ namespace LevelOne.Services
                             content.Item().PaddingTop(10).Element(c => CriarSecao(c, "Chamados Finalizados", finalizados, Colors.Green.Medium));
                     });
 
-                    // rodapé com paginação
                     page.Footer().AlignCenter().Text(x =>
                     {
                         x.Span("Página ");
@@ -74,9 +66,6 @@ namespace LevelOne.Services
             return document.GeneratePdf();
         }
 
-        // ------------------------------
-        // Helpers: cada um recebe IContainer
-        // ------------------------------
         private void CriarResumo(IContainer container, int total, int abertos, int andamento, int finalizados)
         {
             container.Padding(6).Table(table =>
@@ -89,13 +78,11 @@ namespace LevelOne.Services
                     columns.RelativeColumn();
                 });
 
-                // cabeçalho
                 table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Total de Chamados").Bold();
                 table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Abertos").Bold();
                 table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Em Andamento").Bold();
                 table.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Finalizados").Bold();
 
-                // valores
                 table.Cell().Padding(6).Text(total.ToString()).FontSize(13).Bold();
                 table.Cell().Padding(6).Text(abertos.ToString()).FontSize(13).Bold().FontColor(Colors.Red.Darken2);
                 table.Cell().Padding(6).Text(andamento.ToString()).FontSize(13).Bold().FontColor(Colors.Orange.Darken2);
@@ -126,19 +113,17 @@ namespace LevelOne.Services
                 stack.Item().Text(titulo).FontSize(14).Bold().FontColor(cor);
                 stack.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
 
-                // Tabela
                 stack.Item().Table(table =>
                 {
                     table.ColumnsDefinition(columns =>
                     {
-                        columns.RelativeColumn(3); // título
-                        columns.RelativeColumn(2); // cliente
-                        columns.RelativeColumn(2); // tecnico
-                        columns.RelativeColumn(2); // status
-                        columns.RelativeColumn(2); // data abertura
+                        columns.RelativeColumn(3); 
+                        columns.RelativeColumn(2); 
+                        columns.RelativeColumn(2); 
+                        columns.RelativeColumn(2); 
+                        columns.RelativeColumn(2); 
                     });
 
-                    // cabeçalho
                     table.Header(header =>
                     {
                         header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Título").Bold();
@@ -148,7 +133,6 @@ namespace LevelOne.Services
                         header.Cell().Background(Colors.Grey.Lighten3).Padding(6).Text("Data Abertura").Bold();
                     });
 
-                    // linhas
                     foreach (var c in chamados)
                     {
                         table.Cell().Padding(6).Text(c.Titulo ?? "-");

@@ -10,7 +10,6 @@ public class RelatorioXlsService
             using var workbook = new XLWorkbook();
             var worksheet = workbook.Worksheets.Add("Relatório de Chamados");
 
-            // Título principal
             worksheet.Cell("A1").Value = "Relatório de Chamados";
             worksheet.Range("A1:E1").Merge().Style
                 .Font.SetBold()
@@ -23,12 +22,8 @@ public class RelatorioXlsService
                 .Font.SetFontColor(XLColor.Gray)
                 .Alignment.SetHorizontal(XLAlignmentHorizontalValues.Center);
 
-            // Quebra visual
             worksheet.Row(3).Height = 5;
 
-            // -----------------------------
-            // SEÇÃO 1: Resumo geral
-            // -----------------------------
             var totalChamados = chamados.Count;
             var abertos = chamados.Where(c => c.StatusChamado.ToString().Equals("Aberto", StringComparison.OrdinalIgnoreCase)).ToList();
             var andamento = chamados.Where(c => c.StatusChamado.ToString().Contains("Andamento", StringComparison.OrdinalIgnoreCase)).ToList();
@@ -53,9 +48,6 @@ public class RelatorioXlsService
 
             int linhaAtual = 8;
 
-            // -----------------------------
-            // Função auxiliar para seções
-            // -----------------------------
             void AdicionarSecao(string titulo, List<ChamadoModel> lista, XLColor cor)
             {
                 worksheet.Cell(linhaAtual, 1).Value = titulo;
@@ -63,7 +55,6 @@ public class RelatorioXlsService
                 worksheet.Range(linhaAtual, 1, linhaAtual, 5).Merge();
                 linhaAtual++;
 
-                // Cabeçalho da tabela
                 string[] cabecalho = { "Título", "Cliente", "Técnico", "Status", "Data de Abertura" };
                 for (int i = 0; i < cabecalho.Length; i++)
                 {
@@ -97,17 +88,12 @@ public class RelatorioXlsService
                 linhaAtual += 2;
             }
 
-            // -----------------------------
-            // SEÇÕES: Abertos / Andamento / Finalizados
-            // -----------------------------
             AdicionarSecao("Chamados Abertos", abertos, XLColor.Red);
             AdicionarSecao("Chamados em Andamento", andamento, XLColor.Orange);
             AdicionarSecao("Chamados Finalizados", finalizados, XLColor.Green);
 
-            // Ajusta largura das colunas automaticamente
             worksheet.Columns().AdjustToContents();
 
-            // Retorna como array de bytes
             using var stream = new MemoryStream();
             workbook.SaveAs(stream);
             return stream.ToArray();

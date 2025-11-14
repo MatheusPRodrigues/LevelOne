@@ -44,14 +44,12 @@ namespace LevelOne.Data
                     new PermissaoModel(3, "Cliente")
                 );
             
-            // 🔹 Um Chamado pode ter várias Mensagens
             modelBuilder.Entity<MensagemModel>()
                 .HasOne(m => m.Chamado)
                 .WithMany(c => c.Mensagens)
                 .HasForeignKey(m => m.ChamadoId)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            // 🔹 Uma Mensagem pertence a um Usuário
             modelBuilder.Entity<MensagemModel>()
                 .HasOne(m => m.Usuario)
                 .WithMany()

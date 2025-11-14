@@ -173,7 +173,6 @@ public class ChamadosController : Controller
         if (chamado == null)
             return NotFound();
 
-        // Permissões:
         if (isCliente && chamado.IdCliente != userId)
         {
             TempData["Erro"] = "Você não tem permissão para visualizar este chamado.";

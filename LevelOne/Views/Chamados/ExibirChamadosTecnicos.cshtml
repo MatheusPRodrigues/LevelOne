@@ -17,7 +17,6 @@
         </select>
     </div>
 
-    <!-- Chamados Abertos -->
     <div id="abertos" class="tabela-chamados">
         @if (abertos != null && abertos.Any())
         {
@@ -59,7 +58,6 @@
         }
     </div>
 
-    <!-- Chamados em Andamento -->
     <div id="andamento" class="tabela-chamados d-none">
         @if (andamento != null && andamento.Any())
         {
@@ -99,7 +97,6 @@
         }
     </div>
 
-    <!-- Chamados Finalizados -->
     <div id="finalizados" class="tabela-chamados d-none">
         @if (finalizados != null && finalizados.Any())
         {

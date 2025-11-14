@@ -25,7 +25,6 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.Cookie.SecurePolicy = CookieSecurePolicy.Always; 
         options.Cookie.SameSite = SameSiteMode.Strict;
 
-        // Redireciona automaticamente quando o cookie expira
         options.Events = new CookieAuthenticationEvents
         {
             OnRedirectToLogin = ctx =>
