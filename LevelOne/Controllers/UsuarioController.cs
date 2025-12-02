@@ -60,20 +60,23 @@ namespace LevelOne.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UsuarioModel usuarioModel, List<int> permissoesSelecionadas)
+        public async Task<IActionResult> Create(UsuarioModel usuarioModel, int permissaoSelecionada)
         {
+            if (permissaoSelecionada == 0)
+            {
+                ViewBag.Permissoes = _context.Permissoes.ToList();
+                ModelState.AddModelError("", "Selecione pelo menos uma permissão.");
+                return View(usuarioModel);
+            }
+            
             if (ModelState.IsValid)
             {
                 usuarioModel.Senha = SenhaHelper.GerarHashParaSenha(usuarioModel.Senha);
                 _context.Add(usuarioModel);
                 await _context.SaveChangesAsync();
 
-                foreach (var permissao in permissoesSelecionadas)
-                {
-                    var usuarioPermissao = new UsuarioPermissaoModel(usuarioModel.Id, permissao);
-                    _context.UsuariosPermissoes.Add(usuarioPermissao);
-                }
-
+                var usuarioPermissao = new UsuarioPermissaoModel(usuarioModel.Id, permissaoSelecionada);
+                _context.Add(usuarioPermissao);
                 await _context.SaveChangesAsync();
                 
                 return RedirectToAction(nameof(Index));
@@ -122,7 +125,11 @@ namespace LevelOne.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Ativo")] UsuarioModel usuarioModel, List<int> permissoes)
+        public async Task<IActionResult> Edit(
+            int id,
+            [Bind("Id,Nome,Email,Ativo")] UsuarioModel usuarioModel,
+            int permissaoSelecionada
+        )
         {
             var usuario = await _context.Usuarios
                 .Include(u => u.UsuarioPermissoes)
@@ -136,7 +143,7 @@ namespace LevelOne.Controllers
                 return NotFound();
             }
 
-            if (!permissoes.Any())
+            if (permissaoSelecionada == 0)
             {
                 ModelState.AddModelError("", "Pelo menos uma permissão deve ser selecionada.");
                 ViewBag.Permissoes = _context.Permissoes.ToList();
@@ -155,14 +162,13 @@ namespace LevelOne.Controllers
                     usuario.Ativo = usuarioModel.Ativo;
 
                     _context.UsuariosPermissoes.RemoveRange(usuario.UsuarioPermissoes);
-                    foreach (var permissao in permissoes)
-                    {
-                        _context.UsuariosPermissoes.Add(new UsuarioPermissaoModel
-                        (
-                            usuario.Id,
-                            permissao
-                        ));
-                    }
+                    
+                    _context.UsuariosPermissoes.Add(new UsuarioPermissaoModel
+                    (
+                        usuario.Id,
+                        permissaoSelecionada
+                    ));
+                    
 
                     await _context.SaveChangesAsync();
                 }

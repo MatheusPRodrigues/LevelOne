@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -97,7 +97,7 @@
 
 <footer class="border-top footer text-muted custom-footer">
     <div class="container">
-        &copy; 2025 - LevelOne - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        &copy; 2025 - LevelOne
     </div>
 </footer>
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -108,20 +108,19 @@
 {
     <script>
         (function () {
-            const sessionTimeout = 1 * 60 * 1000; // 1 minuto total (teste)
-            const warningBefore = 10 * 1000;      // alerta 10s antes
+            const sessionTimeout = 60 * 60 * 1000; 
+            const warningBefore = 60 * 1000;       
+
             let warningTimeout;
             let logoutTimeout;
             let lastActivityTime = Date.now();
 
             function resetTimers() {
-                const now = Date.now();
-                lastActivityTime = now;
+                lastActivityTime = Date.now();
 
                 clearTimeout(warningTimeout);
                 clearTimeout(logoutTimeout);
 
-                // Agenda o alerta de aviso
                 warningTimeout = setTimeout(() => {
                     const remaining = Math.floor((sessionTimeout - (Date.now() - lastActivityTime)) / 1000);
                     if (remaining > 0) {
@@ -129,7 +128,6 @@
                     }
                 }, sessionTimeout - warningBefore);
 
-                // Agenda o logout
                 logoutTimeout = setTimeout(async () => {
                     alert("Sua sessão expirou por inatividade. Redirecionando para o login.");
                     await fetch('/Login/Logout/');
@@ -137,16 +135,14 @@
                 }, sessionTimeout);
             }
 
-            // Detecta atividade do usuário
+            // Eventos que contam como atividade
             const events = ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'];
             events.forEach(evt => document.addEventListener(evt, resetTimers));
 
-            // Inicializa os timers
             resetTimers();
         })();
     </script>
 }
-
 
 @await RenderSectionAsync("Scripts", required: false)
 </body>

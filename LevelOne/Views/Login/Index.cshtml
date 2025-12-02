@@ -1,4 +1,6 @@
-﻿@{
+﻿@model UsuarioModel
+
+@{
     ViewData["Title"] = "Login";
 }
 
@@ -8,25 +10,29 @@
         <hr class="divider">
 
         <form asp-action="Login" method="post">
-            <div class="mb-3">
-                <label class="form-label">CPF</label>
-                <input type="text" name="cpf" class="form-control" placeholder="Digite seu CPF" required />
-            </div>
+            <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
-            <div class="mb-3 position-relative">
-                <label class="form-label">Senha</label>
-                <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha" required />
-                <span class="toggle-password" onclick="toggleSenha()">
+                <div class="mb-3">
+                    <label asp-for="Cpf" class="form-label">CPF</label>
+                    <input asp-for="Cpf" class="form-control" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Digite seu CPF"/>
+                    <span asp-validation-for="Cpf" class="text-danger small"></span>
+                </div>
+
+                <div class="mb-3 position-relative">
+                    <label class="form-label">Senha</label>
+                    <input type="password" id="senha" name="senha" class="form-control" placeholder="Digite sua senha"
+                           required/>
+                    <span class="toggle-password" onclick="toggleSenha()">
                     <i class="bi bi-eye-slash" id="toggleIcon"></i>
                 </span>
-            </div>
+                </div>
 
-            @if (ViewBag.Erro != null)
-            {
-                <div class="alert alert-danger text-center">@ViewBag.Erro</div>
-            }
+                @if (ViewBag.Erro != null)
+                {
+                    <div class="alert alert-danger text-center">@ViewBag.Erro</div>
+                }
 
-            <button type="submit" class="btn btn-login w-100 fw-semibold">Entrar</button>
+                <button type="submit" class="btn btn-login w-100 fw-semibold">Entrar</button>
         </form>
     </div>
 </div>

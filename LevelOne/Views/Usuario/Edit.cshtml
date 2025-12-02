@@ -43,17 +43,27 @@
                 <label class="form-label fw-semibold text-secondary mb-2">
                     <i class="bi bi-shield-lock me-1"></i> Permissões
                 </label>
+
                 <div class="permissoes-box p-3 rounded">
                     @foreach (var permissao in ViewBag.Permissoes)
                     {
+                        bool usuarioTemPermissao = Model.UsuarioPermissoes
+                            .Any(p => p.PermissaoId == permissao.Id);
+
                         <div class="form-check mb-2">
-                            <input class="form-check-input" type="checkbox" name="permissoes" value="@permissao.Id"
-                                   @(Model.UsuarioPermissoes.Any(p => p.PermissaoId == permissao.Id) ? "checked" : "") />
+                            <input class="form-check-input permissao-checkbox"
+                                   type="checkbox"
+                                   name="permissaoSelecionada"
+                                   value="@permissao.Id"
+                                   @(usuarioTemPermissao ? "checked" : "") />
+
                             <label class="form-check-label">@permissao.Nome</label>
                         </div>
                     }
                 </div>
             </div>
+
+
 
             <div class="d-flex justify-content-between mt-4">
                 <a asp-action="Index" class="btn btn-outline-secondary px-4">
@@ -66,6 +76,21 @@
         </form>
     </div>
 </div>
+
+<script>
+    document.querySelectorAll('.permissao-checkbox').forEach(cb => {
+        cb.addEventListener('change', function () {
+            if (this.checked) {
+                document.querySelectorAll('.permissao-checkbox').forEach(other => {
+                    if (other !== this) {
+                        other.checked = false;
+                    }
+                });
+            }
+        });
+    });
+</script>
+
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
