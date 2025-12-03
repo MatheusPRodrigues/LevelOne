@@ -62,6 +62,12 @@ namespace LevelOne.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(UsuarioModel usuarioModel, int permissaoSelecionada)
         {
+            if (!CpfHelper.ValidarCpf(usuarioModel.Cpf, ModelState))
+            {
+                ViewBag.Permissoes = _context.Permissoes.ToList();
+                return View(usuarioModel);
+            }
+            
             if (permissaoSelecionada == 0)
             {
                 ViewBag.Permissoes = _context.Permissoes.ToList();

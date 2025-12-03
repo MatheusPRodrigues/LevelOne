@@ -19,7 +19,7 @@ namespace LevelOne.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = "O campo CPF é obrigatório")]
-        [StringLength(11)]
+        [StringLength(11, ErrorMessage = "O CPF precisa ter 11 números")]
         public string Cpf { get; set; }
 
         [Required(ErrorMessage = "O campo senha é obrigátorio!")]

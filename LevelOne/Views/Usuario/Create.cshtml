@@ -28,7 +28,7 @@
 
             <div class="form-group mb-3">
                 <label asp-for="Cpf" class="form-label fw-semibold text-secondary"></label>
-                <input asp-for="Cpf" class="form-control shadow-sm" ninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Digite o CPF" />
+                <input asp-for="Cpf" class="form-control shadow-sm" oninput="this.value = this.value.replace(/[^0-9]/g, '')" placeholder="Digite o CPF" />
                 <span asp-validation-for="Cpf" class="text-danger small"></span>
             </div>
 
