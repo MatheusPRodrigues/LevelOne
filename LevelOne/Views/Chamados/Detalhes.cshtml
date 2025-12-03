@@ -76,6 +76,9 @@
         <div class="alert alert-warning mt-3 text-center">
             Este chamado foi finalizado. Não é possível enviar novas mensagens.
         </div>
+        <div class="d-flex justify-content-between mt-3 align-items-center">
+            <a asp-action="@voltarAction" asp-controller="@voltarController" class="btn btn-voltar">← Voltar</a>
+        </div>
     }
     else
     {
