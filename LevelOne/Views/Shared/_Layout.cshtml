@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="icon" type="image/x-icon" href="~/img/logo.png"/>
     <title>@ViewData["Title"] - LevelOne</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
@@ -23,7 +24,11 @@
                         rota = "IndexCliente";
                     
                 }
-                <a class="navbar-brand text-white" asp-area="" asp-controller="Home" asp-action=@rota>LevelOne</a>
+                <a class="navbar-brand text-white d-flex align-items-center gap-2"
+                   asp-area="" asp-controller="Home" asp-action="@rota">
+    
+                    <img src="~/img/logo.png" alt="Logo" style="height:32px; width:auto;">
+                </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
