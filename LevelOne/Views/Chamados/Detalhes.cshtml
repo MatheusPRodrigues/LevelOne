@@ -101,18 +101,16 @@
             @if (isTecnico && Model.IdTecnico == userId)
             {
                 <div class="mt-4 text-end">
-                    @if (possuiMensagemTecnico)
-                    {
-                        <form asp-action="FinalizarChamado" asp-route-id="@Model.Id" method="post">
-                            <button type="submit" class="btn btn-danger">Finalizar Chamado</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <button type="button" class="btn btn-danger" disabled title="Envie ao menos uma mensagem antes de finalizar.">
+
+                    <form asp-action="FinalizarChamado" asp-route-id="@Model.Id" method="post">
+                        <button id="btn-finalizar"
+                                type="submit"
+                                class="btn btn-danger"
+                                @(possuiMensagemTecnico ? "" : "disabled title='Envie ao menos uma mensagem antes de finalizar.'")>
                             Finalizar Chamado
                         </button>
-                    }
+                    </form>
+
                 </div>
             }
         }
@@ -126,14 +124,16 @@
 @section Scripts {
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+
             const form = document.getElementById("mensagemForm");
             const mensagensContainer = document.getElementById("mensagens-container");
             const textoInput = document.getElementById("texto");
             const btnEnviar = form?.querySelector(".btn-enviar");
+            const btnFinalizar = document.getElementById("btn-finalizar");
 
             if (btnEnviar && form) {
                 btnEnviar.addEventListener("click", async function (e) {
-                    e.preventDefault(); 
+                    e.preventDefault();
 
                     const texto = textoInput.value.trim();
                     const chamadoId = form.querySelector("[name='chamadoId']").value;
@@ -170,6 +170,11 @@
                             <div class="mensagem-texto">${data.texto}</div>`;
 
                         mensagensContainer.appendChild(msgDiv);
+
+                        if (btnFinalizar && btnFinalizar.disabled && data.tipoUsuario === "Técnico") {
+                            btnFinalizar.disabled = false;
+                            btnFinalizar.title = "";
+                        }
 
                         textoInput.value = "";
                         mensagensContainer.scrollTop = mensagensContainer.scrollHeight;

@@ -221,31 +221,48 @@ public class ChamadosController : Controller
             return BadRequest(new { erro = "Erro ao enviar mensagem: " + ex.Message });
         }
     }
-    
+
     [Authorize(Roles = "Tecnico")]
     [HttpPost]
     public async Task<IActionResult> FinalizarChamado(int id)
     {
-        var chamado = await _context.Chamados.FindAsync(id);
+        var userId = int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value);
+
+        var chamado = await _context.Chamados
+            .Include(c => c.Mensagens)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
         if (chamado == null)
         {
             TempData["Erro"] = "Chamado não encontrado.";
             return RedirectToAction("ExibirChamadosTecnicos");
         }
 
+        if (chamado.IdTecnico != userId)
+        {
+            TempData["Erro"] = "Você não tem permissão para finalizar este chamado.";
+            return RedirectToAction("Detalhes", new { id });
+        }
+
+        if (!chamado.Mensagens.Any(m => m.UsuarioId == userId))
+        {
+            TempData["Erro"] = "Você deve enviar ao menos 1 mensagem antes de finalizar o chamado.";
+            return RedirectToAction("Detalhes", new { id });
+        }
+
         if (chamado.StatusChamado == StatusEnum.Finalizado)
         {
-            TempData["Erro"] = "Esse chamado já foi finalizado.";
-            return RedirectToAction("Detalhes", new { id = chamado.Id });
+            TempData["Erro"] = "O chamado já está finalizado.";
+            return RedirectToAction("Detalhes", new { id });
         }
 
         chamado.StatusChamado = StatusEnum.Finalizado;
         chamado.DataEncerramento = DateTime.Now;
 
-        _context.Chamados.Update(chamado);
         await _context.SaveChangesAsync();
 
         TempData["Sucesso"] = "Chamado finalizado com sucesso!";
         return RedirectToAction("ExibirChamadosTecnicos");
     }
+
 }
